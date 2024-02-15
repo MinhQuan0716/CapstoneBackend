@@ -1,0 +1,40 @@
+version: '3.4'
+networks:
+   backend:
+services:
+   capstonedb:
+     container_name: capstonedb
+     image: mcr.microsoft.com/mssql/server:2019-latest
+     restart: unless-stopped
+     environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=MinhQuan@2002
+     networks :
+        - backend
+     ports:
+         - 1431:1433
+   cachedb:
+      container_name: cachedb
+      image: redis:latest
+      volumes:
+        - "./redis.conf:/usr/local/etc/redis.conf"
+      ports:
+       - 6379:6379
+      command: 
+       [ "redis-server", "/usr/local/etc/redis.conf"]
+      networks :
+        - backend
+   monochordcapstoneprojectapi:
+    image: ${DOCKER_REGISTRY-}monochordcapstoneprojectapi
+    build:
+      context: .
+      dockerfile: MonochordCapstoneProjectAPI/Dockerfile
+    networks:
+       - backend 
+    ports:
+       - 8002:80
+    depends_on:
+       - capstonedb
+       - cachedb
+    links:
+       - cachedb
