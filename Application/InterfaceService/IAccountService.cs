@@ -13,5 +13,6 @@ namespace Application.InterfaceService
     {
         Task<Token> LoginAsync(LoginForm loginForm);
         Task<bool> RegisterAsync(RegisterForm registerForm);
+        Task<Token> RefreshAccessTokenAsync(string refreshToken);
     }
 }

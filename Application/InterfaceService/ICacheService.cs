@@ -31,5 +31,11 @@ namespace Application.InterfaceService
         /// <param name="key"></param>
         /// <returns></returns>
         object RemoveData(string key);
+        /// <summary>
+        /// Update Data
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        object UpdateData(string key, object value);    
     }
 }

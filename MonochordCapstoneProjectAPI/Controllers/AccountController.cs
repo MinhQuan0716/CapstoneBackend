@@ -34,5 +34,15 @@ namespace MonochordCapstoneProjectAPI.Controllers
             }
             return BadRequest();
         }
+        [HttpGet("/refreshLogin")]
+        public async Task<IActionResult> RefreshToken(string refreshToken)
+        {
+            var accessToken= await _accountService.RefreshAccessTokenAsync(refreshToken);
+            if (accessToken != null)
+            {
+                return Ok(accessToken);
+            }
+            return BadRequest();
+        }
     }
 }

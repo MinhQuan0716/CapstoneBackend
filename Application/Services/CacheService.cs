@@ -14,16 +14,10 @@ namespace Application.Services
     {
         private IDatabase _db;
         private readonly AppConfiguration _configuration;
-        public CacheService(AppConfiguration configuration)
+        public CacheService(AppConfiguration configuration,IDatabase db)
         {
             _configuration = configuration;
-            _db = ConfigureRedis();
-        }
-        internal IDatabase ConfigureRedis()
-        {
-            var configuration = ConfigurationOptions.Parse($"{_configuration.cacheConnectionString}");
-            var connectionMultiplexer = ConnectionMultiplexer.Connect(configuration);
-            return connectionMultiplexer.GetDatabase();
+            _db = db;
         }
         public T GetData<T>(string key)
         {
@@ -41,6 +35,15 @@ namespace Application.Services
             if (_isKeyExist == true)
             {
                 return _db.KeyDelete(key);
+            }
+            return false;
+        }
+        public object UpdateData(string key, object value)
+        {
+            bool _isKeyExist=_db.KeyExists(key);
+            if (_isKeyExist == true)
+            {
+                SetData<object>(key,value,DateTime.Now.AddMinutes(20));
             }
             return false;
         }

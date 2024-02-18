@@ -3,7 +3,7 @@ using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using MonochordCapstoneProjectAPI.Service;
 namespace MonochordCapstoneProjectAPI
 {
     public static class DependencyInjection
@@ -11,7 +11,8 @@ namespace MonochordCapstoneProjectAPI
         public static IServiceCollection AddWebAPIService(this IServiceCollection services,string secretKey)
         {
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<ICacheService, CacheService>();  
+            services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IClaimService, ClaimService>();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

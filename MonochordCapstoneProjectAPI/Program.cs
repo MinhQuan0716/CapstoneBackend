@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var configuration = builder.Configuration.Get<AppConfiguration>();
-builder.Services.AddInfrastructureService(configuration!.databaseConnectionString);
+builder.Services.AddInfrastructureService(configuration!.databaseConnectionString,configuration!.cacheConnectionString);
 builder.Services.AddWebAPIService(configuration!.JwtSecretKey);
 builder.Services.AddSingleton(configuration);
 builder.Services.AddAutoMapper(typeof(MapperProfileConfiguration));
