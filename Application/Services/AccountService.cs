@@ -55,8 +55,10 @@ namespace Application.Services
             _cacheService.SetData(refreshToken, loginAccount.Id.ToString(), DateTime.Now.AddMinutes(30));
             return new Token
             {
+                Username=loginAccount.UserName,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
+                RoleName=loginAccount.Role.RoleName
             };
         }
 
@@ -90,6 +92,7 @@ namespace Application.Services
             _cacheService.SetData(newRefreshToken,loginAccount.Id.ToString() , DateTime.Now.AddMinutes(30));
             return new Token
             {
+                Username=loginAccount.UserName,
                 AccessToken = newAccessToken,
                 RefreshToken = newRefreshToken,
                 RoleName=loginAccount.Role.RoleName
