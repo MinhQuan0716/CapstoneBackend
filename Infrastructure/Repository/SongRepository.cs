@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class SongRepository : GenericRepository<Song>, ISongRepository
+    public class SongRepository : GenericRepository<ListNote>, ISongRepository
     {
         private AppDbContext _appDbContext;
         public SongRepository(AppDbContext appDbContext,IClaimService claimService) : base(appDbContext,claimService)

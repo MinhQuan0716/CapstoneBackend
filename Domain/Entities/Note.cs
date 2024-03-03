@@ -10,6 +10,7 @@ namespace Domain.Entities
     {
         public int NoteId { get; set; }
         public string NoteName { get; set; }
-        public ICollection<SongDetail> SongDetail { get; set; }
+        public string NoteType { get; set; }
+        public ICollection<ListNoteDetail> ListNoteDetail { get; set; }
     }
 }

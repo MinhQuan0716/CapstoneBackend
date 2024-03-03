@@ -13,5 +13,7 @@ namespace Domain.Entities
         public Guid CourseId { get; set; }
         public Course Course { get; set; }
         public ICollection<Video> Videos { get; set; }
+        public ICollection<Quiz> Quizzes { get; set; }
+        public ICollection<TheoryLesson> TheoryLessons { get; set;}
     }
 }

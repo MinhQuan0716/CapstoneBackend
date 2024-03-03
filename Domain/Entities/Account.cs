@@ -10,5 +10,7 @@
         public DateTime? ExpireTokenTime { get; set; }*/
         public int RoleId { get; set; }
         public Role Role { get; set; }
+        public ICollection<UserQuizAttempt> QuizAttempts { get; set; }  
+        public ICollection<UserProgress> Progresses { get; set; }
     }
 }
