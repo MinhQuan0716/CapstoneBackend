@@ -41,7 +41,7 @@ namespace Application.Services
             {
                 throw new Exception("Password is incorrect");
             }
-          /*  var cacheData = _cacheService.GetData<string>(loginAccount.Id.ToString());
+           /* var cacheData = _cacheService.GetData<string>(loginAccount.Id.ToString());
             if (cacheData != null)
             {
                 throw new Exception("You already logged in");
@@ -49,10 +49,10 @@ namespace Application.Services
             var refreshToken = RefreshToken.GetRefreshToken();
             var accessToken = loginAccount.GenerateTokenString(_configuration!.JwtSecretKey, DateTime.Now);
             var expireRefreshTokenTime = DateTime.Now.AddHours(24);
-            loginAccount.RefreshToken = refreshToken;
-            loginAccount.ExpireTokenTime= expireRefreshTokenTime;
+           /* loginAccount.RefreshToken = refreshToken;
+            loginAccount.ExpireTokenTime= expireRefreshTokenTime;*/
             await _unitOfWork.SaveChangeAsync();
-            _cacheService.SetData(refreshToken, loginAccount.Id.ToString(), DateTime.Now.AddMinutes(30));
+            _cacheService.SetData( loginAccount.Id.ToString(), refreshToken, DateTime.Now.AddMinutes(30));
             return new Token
             {
                 Username=loginAccount.UserName,
@@ -78,18 +78,21 @@ namespace Application.Services
         }
         public async Task<Token> RefreshAccessTokenAsync(string refreshToken)
         {
-           
-            var cacheData = _cacheService.GetData<string>(refreshToken);
-            var accountId = string.IsNullOrEmpty(cacheData) ? Guid.Empty : Guid.Parse(cacheData);
+            var accountId = _claimService.GetCurrentUserId;
+            var cacheData = _cacheService.GetData<string>(accountId.ToString());
             var loginAccount = await _unitOfWork.AccountRepository.GetByIdAsync(accountId,x=>x.Role);
             if (loginAccount == null||cacheData==null)
+            {
+                return null;
+            }
+            if (cacheData != refreshToken)
             {
                 return null;
             }
           var newAccessToken=loginAccount.GenerateTokenString(_configuration.JwtSecretKey,DateTime.Now);
             var newRefreshToken = RefreshToken.GetRefreshToken();
             _cacheService.RemoveData(refreshToken);
-            _cacheService.SetData(newRefreshToken,loginAccount.Id.ToString() , DateTime.Now.AddMinutes(30));
+            _cacheService.SetData(loginAccount.Id.ToString(), newRefreshToken,  DateTime.Now.AddMinutes(30));
             return new Token
             {
                 Username=loginAccount.UserName,

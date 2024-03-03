@@ -1,6 +1,7 @@
 ﻿using Application.InterfaceService;
 using Application.ViewModel.Login_Model;
 using Application.ViewModel.RegisterModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
             }
             return BadRequest();
         }
+        [Authorize]
         [HttpGet("/refreshLogin")]
         public async Task<IActionResult> RefreshToken(string refreshToken)
         {

@@ -12,6 +12,7 @@ namespace Application
     {
         public IAccountRepository AccountRepository { get; }
         public ISongRepository SongRepository { get; }
+        public ICourseRepository CourseRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }

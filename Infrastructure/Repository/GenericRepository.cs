@@ -1,4 +1,5 @@
 ﻿using Application.InterfaceRepository;
+using Application.InterfaceService;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,18 +14,25 @@ namespace Infrastructure.Repository
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         protected DbSet<TEntity> _dbSet;
-        public GenericRepository(AppDbContext appDbContext)
+        private readonly IClaimService _claimService;
+        public GenericRepository(AppDbContext appDbContext,IClaimService claimService)
         {
            _dbSet = appDbContext.Set<TEntity>();
+            _claimService = claimService;
         }
 
         public async Task AddAsync(TEntity entity)
         {
+            entity.CreatedBy = _claimService.GetCurrentUserId;
             await _dbSet.AddAsync(entity);
         }
 
         public async Task AddRangeAsync(List<TEntity> entities)
         {
+            foreach(var entity in entities)
+            {
+                entity.CreatedBy=_claimService.GetCurrentUserId;
+            }
             await _dbSet.AddRangeAsync(entities);
         }
 
@@ -62,6 +70,7 @@ namespace Infrastructure.Repository
         public void SoftRemove(TEntity entity)
         {
             entity.IsDelete = true;
+            entity.DeletedBy = _claimService.GetCurrentUserId;
             _dbSet.Update(entity);
         }
 
@@ -70,17 +79,25 @@ namespace Infrastructure.Repository
            foreach(TEntity entity in entities)
             {
                 entity.IsDelete = false;
+                entity.DeletedBy = _claimService.GetCurrentUserId;
             }
             _dbSet.UpdateRange(entities);
         }
 
         public void Update(TEntity entity)
         {
+            entity.ModificationBy=_claimService.GetCurrentUserId;
             _dbSet.Update(entity);
         }
 
         public void UpdateRange(List<TEntity> entities)
         {
+            foreach (TEntity entity in entities)
+            {
+                
+                entity.ModificationBy  = _claimService.GetCurrentUserId;
+            }
+
             _dbSet.UpdateRange(entities);
         }
     }

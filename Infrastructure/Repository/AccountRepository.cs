@@ -1,4 +1,5 @@
 ﻿using Application.InterfaceRepository;
+using Application.InterfaceService;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +13,7 @@ namespace Infrastructure.Repository
     public class AccountRepository : GenericRepository<Account>, IAccountRepository
     {
         private AppDbContext _appDbContext; 
-        public AccountRepository(AppDbContext appDbContext) : base(appDbContext)
+        public AccountRepository(AppDbContext appDbContext,IClaimService claimService) : base(appDbContext,claimService)
         {
             _appDbContext = appDbContext;
         }

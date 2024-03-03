@@ -25,6 +25,7 @@ namespace Infrastructure
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUnitOfWork,UnitOfWork>();   
             services.AddScoped<ISongRepository, SongRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();  
             return services;
         }
     }
