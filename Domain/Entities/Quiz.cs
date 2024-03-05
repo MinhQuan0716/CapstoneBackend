@@ -13,7 +13,7 @@ namespace Domain.Entities
         public bool QuizStatus { get; set; }
         public Guid LessonId { get; set; }
         public Lesson Lesson { get; set; }
-        public ICollection<Question> Questions { get; set; }
+        public ICollection<QuizDetail> Questions { get; set; }
         public ICollection<UserQuizAttempt> UserQuizAttempts { get; set;}
     }
 }

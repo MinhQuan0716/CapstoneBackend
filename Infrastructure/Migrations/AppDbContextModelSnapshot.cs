@@ -73,9 +73,6 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ChoiceOrder")
-                        .HasColumnType("int");
-
                     b.Property<string>("ChoiceText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -95,12 +92,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("ModificationBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Choices");
                 });
@@ -330,14 +322,39 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("QuizId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("QuizId");
-
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.QuestionDetail", b =>
+                {
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChoiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ChoiceOrder")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("QuestionId", "ChoiceId");
+
+                    b.HasIndex("ChoiceId");
+
+                    b.ToTable("QuestionDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quiz", b =>
@@ -379,6 +396,36 @@ namespace Infrastructure.Migrations
                     b.ToTable("Quizzes");
                 });
 
+            modelBuilder.Entity("Domain.Entities.QuizDetail", b =>
+                {
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ModificationBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("QuestionOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuestionId", "QuizId");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("QuizDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.Role", b =>
                 {
                     b.Property<int>("RoleId")
@@ -404,6 +451,11 @@ namespace Infrastructure.Migrations
                         new
                         {
                             RoleId = 2,
+                            RoleName = "Teacher"
+                        },
+                        new
+                        {
+                            RoleId = 3,
                             RoleName = "Student"
                         });
                 });
@@ -573,17 +625,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Choice", b =>
-                {
-                    b.HasOne("Domain.Entities.Question", "Question")
-                        .WithMany("Choices")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("Domain.Entities.Lesson", b =>
                 {
                     b.HasOne("Domain.Entities.Course", "Course")
@@ -633,15 +674,23 @@ namespace Infrastructure.Migrations
                     b.Navigation("ListNote");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Question", b =>
+            modelBuilder.Entity("Domain.Entities.QuestionDetail", b =>
                 {
-                    b.HasOne("Domain.Entities.Quiz", "Quiz")
-                        .WithMany("Questions")
-                        .HasForeignKey("QuizId")
+                    b.HasOne("Domain.Entities.Choice", "Choice")
+                        .WithMany("QuestionDetails")
+                        .HasForeignKey("ChoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Quiz");
+                    b.HasOne("Domain.Entities.Question", "Question")
+                        .WithMany("Choices")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Choice");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quiz", b =>
@@ -653,6 +702,25 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("Domain.Entities.QuizDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.Question", "Question")
+                        .WithMany("QuizDetail")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("Quiz");
                 });
 
             modelBuilder.Entity("Domain.Entities.TheoryLesson", b =>
@@ -722,6 +790,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("QuizAttempts");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Choice", b =>
+                {
+                    b.Navigation("QuestionDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
                     b.Navigation("Lessons");
@@ -751,6 +824,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Question", b =>
                 {
                     b.Navigation("Choices");
+
+                    b.Navigation("QuizDetail");
                 });
 
             modelBuilder.Entity("Domain.Entities.Quiz", b =>

@@ -8,10 +8,8 @@ namespace Domain.Entities
 {
     public  class Choice:BaseEntity
     {
-        public Guid QuestionId { get; set; }
-        public Question Question { get; set; }
         public string ChoiceText { get; set; }
         public bool IsCorrect { get; set; }
-        public int ChoiceOrder { get; set; }
+        public ICollection<QuestionDetail> QuestionDetails { get; set; }
     }
 }

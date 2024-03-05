@@ -22,6 +22,8 @@ namespace Infrastructure
         public DbSet<Question> Questions { get; set; }  
         public DbSet<ListNoteDetail> ListNoteDetails { get; set; }  
         public DbSet<Choice> Choices { get; set; }
+        public DbSet<QuestionDetail> QuestionDetails { get; set; }
+        public DbSet<QuizDetail> QuizDetails { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Note> Notes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

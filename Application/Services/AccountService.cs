@@ -70,7 +70,7 @@ namespace Application.Services
                 throw new Exception("Email already exist");
             }
             var newAcc= _mapper.Map<Account>(registerForm);
-            newAcc.RoleId = 2;
+            newAcc.RoleId = 3;
             newAcc.PasswordHash = registerForm.Password.Hash();
             newAcc.IsDelete = false;
             await _unitOfWork.AccountRepository.AddAsync(newAcc);

@@ -21,6 +21,11 @@ namespace Infrastructure.FluentAPI
              new Role
              {
                  RoleId = 2,
+                 RoleName="Teacher"
+             },
+             new Role
+             {
+                 RoleId=3,
                  RoleName="Student"
              }
             );
