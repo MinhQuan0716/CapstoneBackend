@@ -1,4 +1,5 @@
-﻿using Application.ViewModel.RegisterModel;
+﻿using Application.ViewModel.CourseModel;
+using Application.ViewModel.RegisterModel;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -14,10 +15,15 @@ namespace Infrastructure.Mappers
         public MapperProfileConfiguration() 
         { 
             CreateAccountMap();
+            CreateCourseMap();
         }
         internal void CreateAccountMap()
         {
-            CreateMap<RegisterForm,Account>().ReverseMap();
+            CreateMap<RegisterForm, Account>().ReverseMap();
+        }
+        internal void CreateCourseMap()
+        {
+            CreateMap<CourseDetailViewModel, Course>().ReverseMap();
         }
     }
 }

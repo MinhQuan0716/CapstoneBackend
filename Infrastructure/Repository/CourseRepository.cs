@@ -3,9 +3,12 @@ using Application.InterfaceService;
 using Application.ViewModel.CourseModel;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,14 +22,17 @@ namespace Infrastructure.Repository
             _appDbContext = appDbContext;
         }
 
-        public async Task<IEnumerable<CourseViewModel>> GetAllCourseAsync()
+        public async Task<IEnumerable<CourseViewModel>> GetAllCourseAsync(Guid userId)
         {
-            return await _appDbContext.Courses.Select(x=>new CourseViewModel
+            return await _appDbContext.Courses
+                .Include(x => x.Lessons)
+                .Select(x => new CourseViewModel
             {
-                courseName = x.CourseName,
+                CourseName = x.CourseName,
                 Duration = x.Duration,
-                lessonAmount=x.Lessons.Count(),
-                Percentage=75
+                CourseDescription = x.CourseDescription,
+                numberLesson = x.Lessons.Count(),
+                progress = _appDbContext.UserProgresses.Where(z => z.CourseId == x.Id && z.AccountId == userId).Select(z => z.ProgressPercentage).FirstOrDefault()
             }).AsQueryable().ToListAsync();
         }
     }

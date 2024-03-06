@@ -24,6 +24,7 @@ namespace Infrastructure.Repository
         public async Task AddAsync(TEntity entity)
         {
             entity.CreatedBy = _claimService.GetCurrentUserId;
+            entity.CreationDate = DateTime.Now;
             await _dbSet.AddAsync(entity);
         }
 
@@ -32,6 +33,7 @@ namespace Infrastructure.Repository
             foreach(var entity in entities)
             {
                 entity.CreatedBy=_claimService.GetCurrentUserId;
+                entity.CreationDate = DateTime.Now;
             }
             await _dbSet.AddRangeAsync(entities);
         }
@@ -71,6 +73,7 @@ namespace Infrastructure.Repository
         {
             entity.IsDelete = true;
             entity.DeletedBy = _claimService.GetCurrentUserId;
+            entity.DeletetionDate = DateTime.Now;
             _dbSet.Update(entity);
         }
 
@@ -80,6 +83,7 @@ namespace Infrastructure.Repository
             {
                 entity.IsDelete = false;
                 entity.DeletedBy = _claimService.GetCurrentUserId;
+                entity.DeletetionDate = DateTime.Now;
             }
             _dbSet.UpdateRange(entities);
         }
@@ -87,6 +91,7 @@ namespace Infrastructure.Repository
         public void Update(TEntity entity)
         {
             entity.ModificationBy=_claimService.GetCurrentUserId;
+            entity.ModificationDate = DateTime.Now;
             _dbSet.Update(entity);
         }
 
@@ -96,6 +101,7 @@ namespace Infrastructure.Repository
             {
                 
                 entity.ModificationBy  = _claimService.GetCurrentUserId;
+                entity.ModificationDate = DateTime.Now;
             }
 
             _dbSet.UpdateRange(entities);
