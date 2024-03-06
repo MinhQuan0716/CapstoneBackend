@@ -24,9 +24,10 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<Respone> CreateCourse(CourseViewModel model)
+        public async Task<Respone> CreateCourse(CourseDetailViewModel model)
         {
             var obj = _mapper.Map<Course>(model);
+            obj.IsDelete = false;
             await _unitOfWork.CourseRepository.AddAsync(obj);
             var result = await _unitOfWork.SaveChangeAsync();
             if (result > 0)
@@ -62,7 +63,7 @@ namespace Application.Services
             var result = await _unitOfWork.CourseRepository.GetByIdAsync(CourseId);
             return new Respone(HttpStatusCode.OK, "fetch success", result);
         }
-        public async Task<Respone> UpdateCourse(Guid CourseId, CourseViewModel model)
+        public async Task<Respone> UpdateCourse(Guid CourseId, CourseDetailViewModel model)
         {
             var obj = await _unitOfWork.CourseRepository.GetByIdAsync(CourseId);
             if (obj is not null)

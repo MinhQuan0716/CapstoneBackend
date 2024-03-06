@@ -10,6 +10,7 @@ namespace Domain.Entities
     {
         public string ListNoteName { get; set; }
         public bool ListNoteStatus { get; set; }
+        public string? ImageUrl { get; set; }    
         public ICollection<ListNoteDetail> Detail { get; set; }
         public ICollection<PraticeLesson> PraticeLessons { get; set; }
     }

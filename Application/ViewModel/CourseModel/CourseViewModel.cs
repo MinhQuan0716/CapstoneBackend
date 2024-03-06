@@ -13,6 +13,6 @@ namespace Application.ViewModel.CourseModel
         public string CourseDescription { get; set; }
         public DateTime Duration { get; set; }
         public int numberLesson { get; set; }
-        public int progress { get; set; }
+        public decimal progress { get; set; }
     }
 }

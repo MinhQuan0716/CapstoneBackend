@@ -24,7 +24,7 @@ namespace Infrastructure.Repository
         public async Task AddAsync(TEntity entity)
         {
             entity.CreatedBy = _claimService.GetCurrentUserId;
-            entity.CreationDate = DateTime.Now;
+            entity.CreationDate = DateTime.UtcNow;
             await _dbSet.AddAsync(entity);
         }
 
@@ -66,7 +66,7 @@ namespace Infrastructure.Repository
             .Aggregate(_dbSet.AsQueryable(),
                 (entity, property) => entity.Include(property))
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id.Equals(id) );
+            .FirstOrDefaultAsync(x => x.Id.Equals(id)&&x.IsDelete==false);
         }
 
         public void SoftRemove(TEntity entity)
@@ -83,7 +83,7 @@ namespace Infrastructure.Repository
             {
                 entity.IsDelete = false;
                 entity.DeletedBy = _claimService.GetCurrentUserId;
-                entity.DeletetionDate = DateTime.Now;
+                entity.DeletetionDate = DateTime.UtcNow;
             }
             _dbSet.UpdateRange(entities);
         }
@@ -91,7 +91,7 @@ namespace Infrastructure.Repository
         public void Update(TEntity entity)
         {
             entity.ModificationBy=_claimService.GetCurrentUserId;
-            entity.ModificationDate = DateTime.Now;
+            entity.ModificationDate = DateTime.UtcNow;
             _dbSet.Update(entity);
         }
 
@@ -101,7 +101,7 @@ namespace Infrastructure.Repository
             {
                 
                 entity.ModificationBy  = _claimService.GetCurrentUserId;
-                entity.ModificationDate = DateTime.Now;
+                entity.ModificationDate = DateTime.UtcNow;
             }
 
             _dbSet.UpdateRange(entities);

@@ -11,9 +11,9 @@ namespace Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        /*public DateTime? CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
         public DateTime? ModificationDate { get; set; }
-        public DateTime? DeletetionDate { get; set; }*/
+        public DateTime? DeletetionDate { get; set; }
         public bool? IsDelete { get; set; }
         public Guid? CreatedBy { get; set; }
         public Guid? DeletedBy { get; set; }

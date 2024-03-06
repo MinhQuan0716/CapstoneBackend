@@ -14,7 +14,7 @@ namespace Application.InterfaceService
         Task<Respone> GetAllCourse(Guid userId);
         Task<Respone> CreateCourse(CourseDetailViewModel model);
         Task<Respone> DeleteCourse(Guid courtId);
-        Task<Respone> UpdateCourse(Guid courtId, CourseViewModel model);
+        Task<Respone> UpdateCourse(Guid courtId, CourseDetailViewModel model);
         Task<Respone> GetCourseById(Guid courtId);
     }
 }
