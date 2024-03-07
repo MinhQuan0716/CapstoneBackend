@@ -1,6 +1,6 @@
 ﻿using Application.InterfaceService;
 using Application.ViewModel.CourseModel;
-using Application.ViewModel.Respone;
+using Application.ViewModel.ResponeModel;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -10,8 +10,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static StackExchange.Redis.Role;
-
 namespace Application.Services
 {
     public class CourseService : ICourseService

@@ -10,7 +10,6 @@ namespace Domain.Entities
     {
        
         public string  QuestionText { get; set; }
-        public int QuestionOrder { get; set; }
         public string Explaination { get; set; }
         public ICollection<QuestionDetail> Choices { get; set; }
         public ICollection<QuizDetail> QuizDetail { get; set; }

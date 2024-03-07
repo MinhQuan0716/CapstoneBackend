@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.InterfaceRepository
 {
-    public interface IChoiceRepository:IGenericRepository<Choice>
+    public interface IQuestionDetailRepository:IGenericRepository<QuestionDetail>
     {
-        Task<Guid> GetLastSavedChoice();
     }
 }

@@ -25,6 +25,7 @@ namespace Infrastructure.Repository
         {
             entity.CreatedBy = _claimService.GetCurrentUserId;
             entity.CreationDate = DateTime.UtcNow;
+            entity.IsDelete = false;
             await _dbSet.AddAsync(entity);
         }
 
@@ -33,7 +34,8 @@ namespace Infrastructure.Repository
             foreach(var entity in entities)
             {
                 entity.CreatedBy=_claimService.GetCurrentUserId;
-                entity.CreationDate = DateTime.Now;
+                entity.CreationDate = DateTime.UtcNow;
+                entity.IsDelete = false;
             }
             await _dbSet.AddRangeAsync(entities);
         }
