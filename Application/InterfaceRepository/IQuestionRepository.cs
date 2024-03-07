@@ -9,5 +9,6 @@ namespace Application.InterfaceRepository
 {
     public interface IQuestionRepository:IGenericRepository<Question>
     {
+        Task<Guid> GetLastSavedQuestion();
     }
 }

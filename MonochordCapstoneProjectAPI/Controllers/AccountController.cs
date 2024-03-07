@@ -4,7 +4,7 @@ using Application.ViewModel.RegisterModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Application.ViewModel.ResponeModel;
 namespace MonochordCapstoneProjectAPI.Controllers
 {
    
@@ -23,7 +23,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
             {
                 return Ok(newToken);
             }
-            return BadRequest();
+           return BadRequest();
         }
         [HttpPost("/register")]
         public async Task<IActionResult> Register(RegisterForm registerForm)

@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.ViewModel.Respone
+namespace Application.ViewModel.ResponeModel
 {
     public class Respone
     {

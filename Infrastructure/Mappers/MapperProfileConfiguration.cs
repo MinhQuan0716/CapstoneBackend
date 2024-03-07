@@ -1,4 +1,5 @@
-﻿using Application.ViewModel.CourseModel;
+﻿using Application.ViewModel.ChoiceModel;
+using Application.ViewModel.CourseModel;
 using Application.ViewModel.RegisterModel;
 using AutoMapper;
 using Domain.Entities;
@@ -16,6 +17,7 @@ namespace Infrastructure.Mappers
         { 
             CreateAccountMap();
             CreateCourseMap();
+            CreateChoiceMap();
         }
         internal void CreateAccountMap()
         {
@@ -24,6 +26,10 @@ namespace Infrastructure.Mappers
         internal void CreateCourseMap()
         {
             CreateMap<CourseDetailViewModel, Course>().ReverseMap();
+        }
+        internal void CreateChoiceMap()
+        {
+            CreateMap<CreateChoiceModel, Choice>().ReverseMap();    
         }
     }
 }

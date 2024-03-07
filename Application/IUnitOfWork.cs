@@ -13,6 +13,11 @@ namespace Application
         public IAccountRepository AccountRepository { get; }
         public ISongRepository SongRepository { get; }
         public ICourseRepository CourseRepository { get; }
+        public IQuestionRepository QuestionRepository { get; }
+        public IChoiceRepository ChoiceRepository { get; }
+        public IQuizDetailRepository QuizDetailRepository { get; }
+        public IQuizRepository QuizRepository { get; }
+        public IQuestionDetailRepository QuestionDetailRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }

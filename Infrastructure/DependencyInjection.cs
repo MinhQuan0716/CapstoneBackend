@@ -26,6 +26,11 @@ namespace Infrastructure
             services.AddScoped<IUnitOfWork,UnitOfWork>();   
             services.AddScoped<ISongRepository, SongRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();  
+            services.AddScoped<IChoiceRepository, ChoiceRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();  
+            services.AddScoped<IQuizDetailRepository, QuizDetailRepository>();
+            services.AddScoped<IQuizRepository, QuizRepository>();
+            services.AddScoped<IQuestionDetailRepository, QuestionDetailRepository>();  
             return services;
         }
     }
