@@ -1,4 +1,5 @@
 ﻿using Application.ViewModel.CourseModel;
+using Application.ViewModel.LessonModel;
 using Application.ViewModel.RegisterModel;
 using AutoMapper;
 using Domain.Entities;
@@ -16,6 +17,7 @@ namespace Infrastructure.Mappers
         { 
             CreateAccountMap();
             CreateCourseMap();
+            CreateLessonMap();
         }
         internal void CreateAccountMap()
         {
@@ -24,6 +26,10 @@ namespace Infrastructure.Mappers
         internal void CreateCourseMap()
         {
             CreateMap<CourseDetailViewModel, Course>().ReverseMap();
+        }
+        internal void CreateLessonMap()
+        {
+            CreateMap<LessonViewModel, Lesson>().ReverseMap();
         }
     }
 }

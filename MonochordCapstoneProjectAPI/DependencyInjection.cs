@@ -14,7 +14,8 @@ namespace MonochordCapstoneProjectAPI
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<ICourseService, CourseService>();
-            services.AddScoped<IFileService, FileService>();    
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<ILessonService, LessonService>();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

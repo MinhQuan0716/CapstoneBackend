@@ -15,12 +15,14 @@ namespace Infrastructure
         private readonly IAccountRepository _accountRepository;
         private readonly ISongRepository _songRepository;
         private readonly ICourseRepository _courseRepository;
-        public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, ISongRepository songRepository, ICourseRepository courseRepository)
+        private readonly ILessonRepository _lessonRepository;
+        public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, ISongRepository songRepository, ICourseRepository courseRepository, ILessonRepository lessonRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
             _songRepository = songRepository;
             _courseRepository = courseRepository;
+            _lessonRepository = lessonRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
@@ -28,6 +30,7 @@ namespace Infrastructure
         public ISongRepository SongRepository => _songRepository;
 
         public ICourseRepository CourseRepository => _courseRepository;
+        public ILessonRepository LessonRepository => _lessonRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }
