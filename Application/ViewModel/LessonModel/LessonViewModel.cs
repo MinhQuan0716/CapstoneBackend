@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModel.LessonModel
 {
-    internal class LessonViewModel
+    public class LessonViewModel
     {
+        public string LessonName { get; set; }
+        public string LessonContent { get; set; }
+        public string LessonType { get; set; }
     }
 }

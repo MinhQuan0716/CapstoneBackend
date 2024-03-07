@@ -10,6 +10,7 @@ namespace Application
 {
     public interface IUnitOfWork
     {
+        public ILessonRepository LessonRepository { get; }
         public IAccountRepository AccountRepository { get; }
         public ISongRepository SongRepository { get; }
         public ICourseRepository CourseRepository { get; }

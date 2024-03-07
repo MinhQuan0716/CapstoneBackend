@@ -13,8 +13,8 @@ namespace Application.InterfaceService
     {
         Task<Respone> GetAllCourse(Guid userId);
         Task<Respone> CreateCourse(CourseDetailViewModel model);
-        Task<Respone> DeleteCourse(Guid courtId);
-        Task<Respone> UpdateCourse(Guid courtId, CourseDetailViewModel model);
-        Task<Respone> GetCourseById(Guid courtId);
+        Task<Respone> DeleteCourse(Guid courseId);
+        Task<Respone> UpdateCourse(Guid courseId, CourseDetailViewModel model);
+        Task<Respone> GetCourseById(Guid courseId);
     }
 }
