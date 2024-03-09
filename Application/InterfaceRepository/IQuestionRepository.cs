@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.ViewModel.QuestionModel;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Application.InterfaceRepository
     public interface IQuestionRepository:IGenericRepository<Question>
     {
         Task<Guid> GetLastSavedQuestion();
+        Task<IEnumerable<QuestionViewModel>> GetAllQuestions();
     }
 }

@@ -14,11 +14,23 @@ namespace MonochordCapstoneProjectAPI.Controllers
         {
             _questionService = questionService;
         }
-        [HttpPost("/createQuestion")]
+        [HttpPost("/CreateQuestion")]
         public async Task<IActionResult> CreateQuestion(CreateQuestionModel createQuestionModel)
         {
             Respone createRespone=await _questionService.AddQuestionAsync(createQuestionModel);
             return Ok(createRespone);
+        }
+        [HttpGet("/Questions")]
+        public async Task<IActionResult> GetAllQuestion()
+        {
+            Respone getRespone=await _questionService.GetAllQuestionAsync();
+            return Ok(getRespone);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteQuestion(Guid id)
+        {
+            Respone deleteRespone =await _questionService.DeleteQuestionAsync(id);
+            return Ok(deleteRespone);
         }
     }
 }

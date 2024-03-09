@@ -9,5 +9,7 @@ namespace Application.InterfaceRepository
 {
     public interface IQuestionDetailRepository:IGenericRepository<QuestionDetail>
     {
+        Task<List<Guid>> GetAllChoiceInQuestionDetail(Guid questionId);
+        Task<QuestionDetail> GetQuestionDetail(Guid questionId,Guid choiceId);
     }
 }

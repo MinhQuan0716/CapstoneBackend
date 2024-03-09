@@ -32,6 +32,12 @@ namespace Infrastructure.Repository
         })
         .ToListAsync();
         }
+
+        public async Task<Lesson> GetLessonByName(string lessonName)
+        {
+            return await _appDbContext.Lessons.FirstOrDefaultAsync(x => x.LessonName == lessonName);
+        }
+
         private string GetLessonType(Lesson lesson)
         {
             if (lesson.Videos.Any())

@@ -2,6 +2,7 @@
 using Application.InterfaceService;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace Infrastructure.Repository
     {
         protected DbSet<TEntity> _dbSet;
         private readonly IClaimService _claimService;
-        public GenericRepository(AppDbContext appDbContext,IClaimService claimService)
+        public GenericRepository(AppDbContext appDbContext, IClaimService claimService)
         {
-           _dbSet = appDbContext.Set<TEntity>();
+            _dbSet = appDbContext.Set<TEntity>();
             _claimService = claimService;
         }
 
@@ -31,16 +32,16 @@ namespace Infrastructure.Repository
 
         public async Task AddRangeAsync(List<TEntity> entities)
         {
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
-                entity.CreatedBy=_claimService.GetCurrentUserId;
+                entity.CreatedBy = _claimService.GetCurrentUserId;
                 entity.CreationDate = DateTime.UtcNow;
                 entity.IsDelete = false;
             }
             await _dbSet.AddRangeAsync(entities);
         }
 
-        public async  Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
         {
             return await includes
          .Aggregate(_dbSet.AsQueryable(),
@@ -48,7 +49,7 @@ namespace Infrastructure.Repository
          .Where(expression).Where(x => x.IsDelete == false).ToListAsync();
         }
 
-        public async  Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
+        public async Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] includes)
         {
             return await includes
            .Aggregate(_dbSet.AsQueryable(),
@@ -62,14 +63,15 @@ namespace Infrastructure.Repository
             return await this.GetByIdAsync(id, Array.Empty<Expression<Func<TEntity, object>>>());
         }
 
-        public async  Task<TEntity?> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<TEntity?> GetByIdAsync(Guid id, params Expression<Func<TEntity, object>>[] includes)
         {
             return await includes
             .Aggregate(_dbSet.AsQueryable(),
                 (entity, property) => entity.Include(property))
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id.Equals(id)&&x.IsDelete==false);
+            .FirstOrDefaultAsync(x => x.Id.Equals(id) && x.IsDelete == false);
         }
+       
 
         public void SoftRemove(TEntity entity)
         {

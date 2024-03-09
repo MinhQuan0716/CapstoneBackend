@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MonochordCapstoneProjectAPI.Controllers
 {
-    public class LessonController : Controller
+    public class LessonController :MainController
     {
         private readonly ILessonService _lessonService;
         public LessonController(ILessonService lessonService)

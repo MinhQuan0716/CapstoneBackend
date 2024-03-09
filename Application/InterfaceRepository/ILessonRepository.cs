@@ -12,5 +12,6 @@ namespace Application.InterfaceRepository
     public interface ILessonRepository : IGenericRepository<Lesson>
     {
         Task<IEnumerable<LessonViewModel>> GetAllLessonByCourseIdAsync(Guid courseId);
+        Task<Lesson> GetLessonByName (string lessonName); 
     }
 }

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.ViewModel.QuestionModel;
+using Application.ViewModel.QuizModel;
 
 namespace Infrastructure.Mappers
 {
@@ -20,6 +22,8 @@ namespace Infrastructure.Mappers
             CreateCourseMap();
             CreateLessonMap();
             CreateChoiceMap();
+            CreateQuestionMap();
+            CreateQuizMap();
         }
         internal void CreateAccountMap()
         {
@@ -33,9 +37,18 @@ namespace Infrastructure.Mappers
         {
             CreateMap<LessonViewModel, Lesson>().ReverseMap();
         }
+        internal void CreateQuestionMap()
+        {
+            CreateMap<CreateQuestionModel,Question>().ReverseMap();
+            CreateMap<UpdateQuestionViewModel,Question>().ReverseMap(); 
+        }
         internal void CreateChoiceMap()
         {
             CreateMap<CreateChoiceModel, Choice>().ReverseMap();    
+        }
+        internal void CreateQuizMap()
+        {
+            CreateMap<CreateQuizModel,Quiz>().ReverseMap(); 
         }
     }
 }
