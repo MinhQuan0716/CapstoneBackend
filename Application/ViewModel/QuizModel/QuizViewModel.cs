@@ -8,7 +8,7 @@ namespace Application.ViewModel.QuizModel
 {
     public class QuizViewModel
     {
-        public string QuestionText { get; set; }
-        public List<string> ChoiceList { get; set; }
+        public List<string> QuestionTextList { get; set; }
+        public List<string> ChoiceList { get; set; }    
     }
 }

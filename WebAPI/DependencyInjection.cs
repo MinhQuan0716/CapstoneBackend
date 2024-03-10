@@ -1,23 +1,23 @@
 ﻿using Application.InterfaceService;
 using Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using WebAPI.WebService;
 using System.Text;
-using MonochordCapstoneProjectAPI.Service;
-namespace MonochordCapstoneProjectAPI
+using Microsoft.IdentityModel.Tokens;
+namespace WebAPI
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddMobilebAPIService(this IServiceCollection services,string secretKey)
+        public static IServiceCollection AddWebAPIService(this IServiceCollection services, string secretKey)
         {
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ILessonService, LessonService>();
-            services.AddScoped<IFileService, FileService>();    
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IQuestionService, QuestionService>();
-            services.AddScoped<IQuizService, QuizService>();    
+            services.AddScoped<IQuizService, QuizService>();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
@@ -38,3 +38,4 @@ namespace MonochordCapstoneProjectAPI
         }
     }
 }
+

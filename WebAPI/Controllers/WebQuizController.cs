@@ -4,16 +4,16 @@ using Application.ViewModel.ResponeModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MonochordCapstoneProjectAPI.Controllers
+namespace WebAPI.Controllers
 {
-    public class QuizController : MainController
+    public class WebQuizController :MainController
     {
         private readonly IQuizService _quizService;
-        public QuizController(IQuizService quizService)
+        public WebQuizController(IQuizService quizService)
         {
             _quizService = quizService;
         }
-       /* [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> CreateQuiz(CreateQuizModel createQuizModel)
         {
             Respone createRespone = await _quizService.CreateQuizAsync(createQuizModel);
@@ -24,14 +24,6 @@ namespace MonochordCapstoneProjectAPI.Controllers
         {
             Respone deleteRespone = await _quizService.DeleteQuizAsync(id);
             return NoContent();
-        }*/
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuizById(Guid id)
-        {
-            Respone getRespone = await _quizService.GetQuizAsync(id);
-            return Ok(getRespone);
         }
     }
 }
-
-

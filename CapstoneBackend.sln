@@ -13,6 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonochordCapstoneProjectAPI
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{48286D82-4562-46FE-A906-CC00FA709EAA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{1B2BD069-CB79-4753-9D95-30299FE60908}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{E30AB37A-D0C9-4269-BC4F-790C9D3BA232}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "APIGateway\APIGateway.csproj", "{D3E69305-3DB5-4661-B17A-065379315601}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{1DC374E2-2E64-4D0C-A372-29DB90E1E299}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +47,22 @@ Global
 		{48286D82-4562-46FE-A906-CC00FA709EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48286D82-4562-46FE-A906-CC00FA709EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48286D82-4562-46FE-A906-CC00FA709EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E30AB37A-D0C9-4269-BC4F-790C9D3BA232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E30AB37A-D0C9-4269-BC4F-790C9D3BA232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E30AB37A-D0C9-4269-BC4F-790C9D3BA232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E30AB37A-D0C9-4269-BC4F-790C9D3BA232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3E69305-3DB5-4661-B17A-065379315601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3E69305-3DB5-4661-B17A-065379315601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3E69305-3DB5-4661-B17A-065379315601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3E69305-3DB5-4661-B17A-065379315601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{30501D47-CE44-4883-87D1-348D89A12C7D} = {1B2BD069-CB79-4753-9D95-30299FE60908}
+		{E30AB37A-D0C9-4269-BC4F-790C9D3BA232} = {1B2BD069-CB79-4753-9D95-30299FE60908}
+		{D3E69305-3DB5-4661-B17A-065379315601} = {1DC374E2-2E64-4D0C-A372-29DB90E1E299}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45AD2C80-3EB4-49B0-81D7-F8DCE19B85DB}

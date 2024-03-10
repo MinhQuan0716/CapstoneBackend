@@ -75,6 +75,16 @@ namespace Application.Services
             }
             return new Respone(HttpStatusCode.InternalServerError, "Delete faild", null);
         }
+
+        public async Task<Respone> GetQuizAsync(Guid lessonId)
+        {
+            QuizViewModel quizViewModel = await _unitOfWork.QuizRepository.GetQuiz(lessonId);
+            if(quizViewModel == null)
+            {
+                return new Respone(HttpStatusCode.NotFound, "Cannot find quiz", null);
+            }
+            return new Respone(HttpStatusCode.OK, "", quizViewModel);
+        }
     }
 }
 

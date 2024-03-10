@@ -38,3 +38,27 @@ services:
        - cachedb
     links:
        - cachedb
+   webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebAPI/Dockerfile
+    networks:
+       - backend 
+    ports:
+       - 8003:80
+    depends_on:
+       - capstonedb
+       - cachedb
+    links:
+       - cachedb
+   apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: APIGateway/Dockerfile
+    networks:
+       - backend 
+    ports:
+       - 8001:80
+

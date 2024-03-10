@@ -12,5 +12,6 @@ namespace Application.InterfaceService
     {
         Task<Respone> CreateQuizAsync(CreateQuizModel createQuizModel);
         Task<Respone> DeleteQuizAsync(Guid quizId);
+        Task<Respone> GetQuizAsync(Guid lessonId);
     }
 }
