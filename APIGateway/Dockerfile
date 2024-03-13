@@ -10,9 +10,9 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["APIGateway/APIGateway.csproj", "APIGateway/"]
 RUN dotnet restore "./APIGateway/./APIGateway.csproj"
+COPY . .
 RUN dotnet dev-certs https
 COPY --from=build /root/.dotnet/corefx/cryptography/x509stores/my/* /root/.dotnet/corefx/cryptography/x509stores/my/
-COPY . .
 WORKDIR "/src/APIGateway"
 RUN dotnet build "./APIGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
