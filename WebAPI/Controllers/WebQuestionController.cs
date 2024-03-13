@@ -15,6 +15,12 @@ namespace WebAPI.Controllers
         {
             _questionService = questionService;
         }
+        [HttpGet]
+        public async Task<Respone> GetAllQuestion()
+        {
+            Respone respone=await _questionService.GetAllQuestionAsync();
+            return respone;
+        }
         [HttpPost]
         public async Task<IActionResult> CreateQuestion(CreateQuestionModel createQuestionModel)
         {
@@ -27,5 +33,6 @@ namespace WebAPI.Controllers
             Respone respone=await _questionService.DeleteQuestionAsync(id);
             return respone;
         }
+        
     }
 }
