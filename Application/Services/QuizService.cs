@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Application.Common;
+using Application.InterfaceRepository;
 namespace Application.Services
 {
     public class QuizService : IQuizService
@@ -76,15 +78,23 @@ namespace Application.Services
             return new Respone(HttpStatusCode.InternalServerError, "Delete faild", null);
         }
 
-        public async Task<Respone> GetQuizAsync(Guid lessonId)
+        public async Task<Respone> GetQuizAsync(Guid lessonId, int pageIndex, int pageSize)
         {
-            QuizViewModel quizViewModel = await _unitOfWork.QuizRepository.GetQuiz(lessonId);
-            if(quizViewModel == null)
+          Pagination<QuizViewModel> quizList = new Pagination<QuizViewModel>();
+            try
             {
-                return new Respone(HttpStatusCode.NotFound, "Cannot find quiz", null);
+                 quizList = await _unitOfWork.QuizRepository.GetPaginationQuiz(lessonId,pageIndex,pageSize);
+                if (quizList==null)
+                {
+                    return new Respone(HttpStatusCode.BadGateway, "Fetch error", null);
+                }
+            } catch (Exception ex)
+            {
+                return new Respone(HttpStatusCode.InternalServerError, ex.Message, null);
             }
-            return new Respone(HttpStatusCode.OK, "", quizViewModel);
+            return new Respone(HttpStatusCode.OK, "Fetch success", quizList);
         }
     }
-}
+    }
+
 

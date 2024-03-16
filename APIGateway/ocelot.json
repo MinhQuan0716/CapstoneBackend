@@ -68,6 +68,19 @@
       ],
       "DownstreamPathTemplate": "/api/v1/Quiz/{action}/{id}"
     },
+    {
+      "UpstreamPathTemplate": "/api/v1/Quiz/{action}/{id}?{pageIndex}&{pageSize}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+
+          "Host": "monochordcapstoneprojectapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/Quiz/{action}/{id}?{pageIndex}&{pageSize}"
+    },
 
 
     // Web API for Account

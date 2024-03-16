@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.FluentAPI
 {
-    internal class SongDetailConfiguration : IEntityTypeConfiguration<ListNoteDetail>
+    internal class ListNoteDetailConfiguration : IEntityTypeConfiguration<ListNoteDetail>
     {
         public void Configure(EntityTypeBuilder<ListNoteDetail> builder)
         {
+            builder.HasKey(x => new { x.ListNoteId,x.NoteId});
             builder.HasOne(x=>x.ListNote).WithMany(song=>song.Detail).HasForeignKey(x=>x.ListNoteId);
             builder.HasOne(x => x.Note).WithMany(note=>note.ListNoteDetail).HasForeignKey(x => x.NoteId);
+            builder.Ignore(x => x.Id);
         }
     }
 }

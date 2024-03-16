@@ -13,22 +13,22 @@ namespace MonochordCapstoneProjectAPI.Controllers
         {
             _quizService = quizService;
         }
-       /* [HttpPost]
-        public async Task<IActionResult> CreateQuiz(CreateQuizModel createQuizModel)
-        {
-            Respone createRespone = await _quizService.CreateQuizAsync(createQuizModel);
-            return Ok(createRespone);
-        }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuiz(Guid id)
-        {
-            Respone deleteRespone = await _quizService.DeleteQuizAsync(id);
-            return NoContent();
-        }*/
+        /* [HttpPost]
+         public async Task<IActionResult> CreateQuiz(CreateQuizModel createQuizModel)
+         {
+             Respone createRespone = await _quizService.CreateQuizAsync(createQuizModel);
+             return Ok(createRespone);
+         }
+         [HttpDelete("{id}")]
+         public async Task<IActionResult> DeleteQuiz(Guid id)
+         {
+             Respone deleteRespone = await _quizService.DeleteQuizAsync(id);
+             return NoContent();
+         }*/
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuizById(Guid id)
+        public async Task<IActionResult> GetQuizByLessonId(Guid id,[FromQuery] int pageIndex,int pageSize)
         {
-            Respone getRespone = await _quizService.GetQuizAsync(id);
+            Respone getRespone = await _quizService.GetQuizAsync(id,pageIndex,pageSize);
             return Ok(getRespone);
         }
     }

@@ -48,7 +48,8 @@ namespace Infrastructure.Mappers
         }
         internal void CreateQuizMap()
         {
-            CreateMap<CreateQuizModel,Quiz>().ReverseMap(); 
+            CreateMap<CreateQuizModel,Quiz>().ReverseMap();
+            CreateMap<QuizViewModel, Quiz>().ReverseMap();
         }
     }
 }

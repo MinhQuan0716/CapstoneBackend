@@ -1,4 +1,5 @@
-﻿using Application.ViewModel.QuizModel;
+﻿using Application.Common;
+using Application.ViewModel.QuizModel;
 using Application.ViewModel.ResponeModel;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,6 @@ namespace Application.InterfaceService
     {
         Task<Respone> CreateQuizAsync(CreateQuizModel createQuizModel);
         Task<Respone> DeleteQuizAsync(Guid quizId);
-        Task<Respone> GetQuizAsync(Guid lessonId);
+        Task<Respone> GetQuizAsync(Guid lessonId,int pageIndex,int pageSize);
     }
 }

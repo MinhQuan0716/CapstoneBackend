@@ -12,5 +12,6 @@
         public Role Role { get; set; }
         public ICollection<UserQuizAttempt> QuizAttempts { get; set; }  
         public ICollection<UserProgress> Progresses { get; set; }
+        public ICollection<Payment> ListPayment { get; set; }
     }
 }
