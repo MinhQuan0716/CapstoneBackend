@@ -40,7 +40,7 @@ services:
     links:
        - cachedb
     volumes:
-      - "./EmailTemplate/ForgotPasswordTemplate.html:/app/EmailTemplate"
+      - "./EmailTemplate:/app/EmailTemplate"
    webapi:
     image: ${DOCKER_REGISTRY-}webapi
     build:
