@@ -29,8 +29,6 @@ services:
     build:
       context: .
       dockerfile: MonochordCapstoneProjectAPI/Dockerfile
-    volumes:
-       - "D:/TestAzure/MonochordCapstoneProjectAPI/EmailTemplate:/app"
     networks:
        - backend 
     ports:
