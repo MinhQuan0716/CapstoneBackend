@@ -3,6 +3,7 @@ using Infrastructure;
 using Infrastructure.Mappers;
 using Microsoft.OpenApi.Models;
 using MonochordCapstoneProjectAPI;
+using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -45,7 +46,9 @@ builder.Services.AddSwaggerGen(opt =>
                 new string[]{}
             }
      });
-
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
 });
 var app = builder.Build();
 

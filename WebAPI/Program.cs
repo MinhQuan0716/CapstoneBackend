@@ -2,6 +2,7 @@ using Application.Common;
 using Infrastructure;
 using Infrastructure.Mappers;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using WebAPI;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +46,9 @@ builder.Services.AddSwaggerGen(opt =>
                 new string[]{}
             }
      });
-
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();

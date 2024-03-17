@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using WebAPI.WebService;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Application.Util;
 namespace WebAPI
 {
     public static class DependencyInjection
@@ -18,6 +19,7 @@ namespace WebAPI
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IQuizService, QuizService>();
+            services.AddScoped<ISendMailHelper,SendMailHelper>();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

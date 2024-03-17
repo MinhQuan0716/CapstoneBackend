@@ -4,15 +4,19 @@ using Application.InterfaceService;
 using Application.Util;
 using Application.ViewModel.Login_Model;
 using Application.ViewModel.RegisterModel;
+using Application.ViewModel.ResetPasswordModel;
+using Application.ViewModel.ResponeModel;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Net;
 namespace Application.Services
 {
     public class AccountService : IAccountService
@@ -22,13 +26,16 @@ namespace Application.Services
         private readonly IMapper _mapper;
         private readonly ICacheService _cacheService;
         private readonly IClaimService _claimService;
-        public AccountService(IUnitOfWork unitOfWork,AppConfiguration configuration,IMapper mapper,ICacheService cacheService,IClaimService claimService)
+        private ISendMailHelper _sendMailHelper;
+        public AccountService(IUnitOfWork unitOfWork,AppConfiguration configuration
+            ,IMapper mapper,ICacheService cacheService,IClaimService claimService,ISendMailHelper sendMailHelper)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
             _mapper = mapper;
             _cacheService = cacheService;
             _claimService = claimService;
+            _sendMailHelper = sendMailHelper;
         }
         public async Task<Token> LoginAsync(LoginForm loginForm)
         {
@@ -41,16 +48,9 @@ namespace Application.Services
             {
                 throw new Exception("Password is incorrect");
             }
-           /* var cacheData = _cacheService.GetData<string>(loginAccount.Id.ToString());
-            if (cacheData != null)
-            {
-                throw new Exception("You already logged in");
-            }*/
             var refreshToken = RefreshToken.GetRefreshToken();
             var accessToken = loginAccount.GenerateTokenString(_configuration!.JwtSecretKey, DateTime.Now);
             var expireRefreshTokenTime = DateTime.Now.AddHours(24);
-           /* loginAccount.RefreshToken = refreshToken;
-            loginAccount.ExpireTokenTime= expireRefreshTokenTime;*/
             await _unitOfWork.SaveChangeAsync();
             _cacheService.SetData( loginAccount.Id.ToString(), refreshToken, DateTime.Now.AddMinutes(30));
             return new Token
@@ -100,6 +100,70 @@ namespace Application.Services
                 RefreshToken = newRefreshToken,
                 RoleName=loginAccount.Role.RoleName
             };
+        }
+
+        public async Task<Respone> ResetPassword(ResetPasswordDTO resetPasswordDTO)
+        {
+            string email= _cacheService.GetData<string>(resetPasswordDTO.Code);
+
+            if (email != null)
+            {
+                if (resetPasswordDTO.NewPassword.Equals(resetPasswordDTO.ConfirmPassword))
+                {
+                    var user = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
+                    if (user != null)
+                    {
+                        resetPasswordDTO.NewPassword = resetPasswordDTO.NewPassword.Hash();
+                       /* user = _mapper.Map<Account>(resetPasswordDTO);*/
+                        _ = _mapper.Map(resetPasswordDTO, user, typeof(ResetPasswordDTO), typeof(Account));
+                        _unitOfWork.AccountRepository.Update(user);
+                        if (await _unitOfWork.SaveChangeAsync() > 0)
+                        {
+                            return new Respone(HttpStatusCode.OK,"Reset successfully");
+                        }
+                    }
+                }
+                else
+                {
+                    return new Respone(HttpStatusCode.BadRequest,"Password and Confirm Passord do not match");
+                }
+            }
+            return new Respone(HttpStatusCode.BadRequest,"Invalide code");
+        }
+
+        public async Task<Respone> SendConfirmMailCode(string email)
+        {
+            var findAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
+            string key;
+            if (findAccount == null)
+            {
+                return new Respone(HttpStatusCode.BadRequest, "Account do not exist");
+            }
+            try
+            {
+                key = StringUtil.RandomString(6);
+                //Get project's directory and fetch ForgotPasswordTemplate content from EmailTemplate
+                string exePath = Environment.CurrentDirectory.ToString();
+                string FilePath = exePath + @"/EmailTemplate/ForgotPasswordTemplate.html";
+                StreamReader streamreader = new StreamReader(FilePath);
+                string MailText = streamreader.ReadToEnd();
+                streamreader.Close();
+                //Replace [resetpasswordkey] = key
+                MailText = MailText.Replace("[resetpasswordkey]", key);
+                //Replace [emailaddress] = email
+                MailText = MailText.Replace("[emailaddress]", email);
+                var result = await _sendMailHelper.SendMailAsync(email, "ResetPassword", MailText);
+                if (!result) 
+                {
+                    return new Respone(HttpStatusCode.BadRequest, "Cannot send mail");
+                } ;
+
+                _cacheService.SetData(key,email,DateTimeOffset.Now.AddMinutes(10));
+            } catch(Exception ex) 
+                {
+                 return new Respone(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            return new Respone(HttpStatusCode.OK, "Send successfully");
         }
     }
 }

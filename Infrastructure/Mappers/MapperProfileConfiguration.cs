@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.ViewModel.QuestionModel;
 using Application.ViewModel.QuizModel;
+using Application.ViewModel.ResetPasswordModel;
 
 namespace Infrastructure.Mappers
 {
@@ -28,6 +29,7 @@ namespace Infrastructure.Mappers
         internal void CreateAccountMap()
         {
             CreateMap<RegisterForm, Account>().ReverseMap();
+            CreateMap<ResetPasswordDTO,Account>().ForMember(rp => rp.PasswordHash, opt => opt.MapFrom(src => src.NewPassword)).ReverseMap(); 
         }
         internal void CreateCourseMap()
         {

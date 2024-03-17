@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MonochordCapstoneProjectAPI.Service;
+using Application.Util;
 namespace MonochordCapstoneProjectAPI
 {
     public static class DependencyInjection
@@ -18,7 +19,9 @@ namespace MonochordCapstoneProjectAPI
             services.AddScoped<IFileService, FileService>();    
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IQuizService, QuizService>();    
+            services.AddScoped<ISendMailHelper,SendMailHelper>();
             services.AddHttpContextAccessor();
+            services.AddMemoryCache();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
                {
