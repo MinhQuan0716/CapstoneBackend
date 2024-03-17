@@ -29,6 +29,7 @@ services:
     build:
       context: .
       dockerfile: MonochordCapstoneProjectAPI/Dockerfile
+
     networks:
        - backend 
     ports:
@@ -38,6 +39,8 @@ services:
        - cachedb
     links:
        - cachedb
+    volumes:
+      - "D:/TestAzure/MonochordCapstoneProjectAPI/EmailTemplate:/app"
    webapi:
     image: ${DOCKER_REGISTRY-}webapi
     build:
