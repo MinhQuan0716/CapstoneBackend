@@ -40,7 +40,7 @@ services:
     links:
        - cachedb
     volumes:
-      - "D:/TestAzure/MonochordCapstoneProjectAPI/EmailTemplate:/app"
+      - "./EmailTemplate/ForgotPasswordTemplate.html:/app"
    webapi:
     image: ${DOCKER_REGISTRY-}webapi
     build:
