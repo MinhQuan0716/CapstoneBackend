@@ -11,5 +11,7 @@ namespace Domain.Entities
         public string CommentContent { get; set; }  
         public  Guid VideoId { get; set; }
         public Video Video { get; set; }    
+        public Guid AccountId { get; set; }
+        public Account Account { get; set; }
     }
 }

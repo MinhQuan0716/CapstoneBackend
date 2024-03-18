@@ -163,6 +163,20 @@
         }
       ],
       "DownstreamPathTemplate": "/api/v1/WebQuestion/{action}/{id}"
+    },
+    //Web API For Choice
+    {
+      "UpstreamPathTemplate": "/api/v1/WebChoice/{action}/{id}",
+      "UpstreamHttpMethod": [ "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+
+          "Host": "webapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/WebChoice/{action}/{id}"
     }
   ],
   "GlobalConfiguration": {

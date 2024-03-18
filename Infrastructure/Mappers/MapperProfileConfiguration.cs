@@ -47,11 +47,11 @@ namespace Infrastructure.Mappers
         internal void CreateChoiceMap()
         {
             CreateMap<CreateChoiceModel, Choice>().ReverseMap();    
+            CreateMap<UpdateChoiceModel, Choice>().ReverseMap();
         }
         internal void CreateQuizMap()
         {
             CreateMap<CreateQuizModel,Quiz>().ReverseMap();
-            CreateMap<QuizViewModel, Quiz>().ReverseMap();
         }
     }
 }

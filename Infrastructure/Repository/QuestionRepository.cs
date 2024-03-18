@@ -1,5 +1,6 @@
 ﻿using Application.InterfaceRepository;
 using Application.InterfaceService;
+using Application.ViewModel.ChoiceModel;
 using Application.ViewModel.QuestionModel;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,19 @@ namespace Infrastructure.Repository
 
         public async Task<IEnumerable<QuestionViewModel>> GetAllQuestions()
         {
+            
             return await _appDbContext.Questions.Include(x => x.Choices).ThenInclude(y => y.Choice)
                 .Select(x => new QuestionViewModel
                 {
                     QuestionId=x.Id,
                     QuestionText=x.QuestionText,
                     Explainantion=x.Explaination,
-                    ChoiceList=x.Choices.Select(x=>x.Choice.ChoiceText).ToList(),
+                    ChoiceList=x.Choices.Select(x=>new ChoiceViewModel
+                    {
+                        ChoiceId=x.Choice.Id,
+                        ChoiceText=x.Choice.ChoiceText,
+                        IsCorrect=x.Choice.IsCorrect
+                    }).ToList(),
                 }
                 ).AsQueryable().ToListAsync();
         }

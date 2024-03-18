@@ -114,7 +114,6 @@ namespace Application.Services
                     if (user != null)
                     {
                         resetPasswordDTO.NewPassword = resetPasswordDTO.NewPassword.Hash();
-                       /* user = _mapper.Map<Account>(resetPasswordDTO);*/
                         _ = _mapper.Map(resetPasswordDTO, user, typeof(ResetPasswordDTO), typeof(Account));
                         _unitOfWork.AccountRepository.Update(user);
                         if (await _unitOfWork.SaveChangeAsync() > 0)

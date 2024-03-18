@@ -20,6 +20,7 @@ namespace WebAPI
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IQuizService, QuizService>();
             services.AddScoped<ISendMailHelper,SendMailHelper>();
+            services.AddScoped<IChoiceService, ChoiceService>();    
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
