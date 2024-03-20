@@ -13,5 +13,6 @@ namespace Application.InterfaceService
         Task<Respone> GetAllLessonByCourseId(Guid courseId);
         Task<Respone> DeleteLesson(Guid lessonId);
         Task<Respone> GetLessonById(Guid lessonId);
+        Task<Respone> GetAllLesson();
     }
 }
