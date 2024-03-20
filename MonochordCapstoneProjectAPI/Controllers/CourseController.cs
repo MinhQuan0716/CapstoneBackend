@@ -26,7 +26,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK,"Get course by userId",typeof(Respone))]
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetCourse(Guid Id)
+        public async Task<IActionResult> GetCourseByUserId(Guid Id)
         {
             var result = await _courseService.GetAllCourseByUserId(Id);
             if(result.Status==HttpStatusCode.OK.ToString())
