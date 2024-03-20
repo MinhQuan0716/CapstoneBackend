@@ -19,7 +19,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
         /// <summary>
         /// Get Lesson by CourseId
         /// </summary>
-        /// <param name="id">The CourseId default value: ${Guid.NewGuid()}</param>
+        /// <param name="id">The Course Id </param>
         /// <returns></returns>
         [SwaggerResponse((int)HttpStatusCode.OK, "Get lesson by course id", typeof(Respone))]
         [HttpGet("{id}")]

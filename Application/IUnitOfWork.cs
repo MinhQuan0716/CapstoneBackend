@@ -19,6 +19,7 @@ namespace Application
         public IQuizDetailRepository QuizDetailRepository { get; }
         public IQuizRepository QuizRepository { get; }
         public IQuestionDetailRepository QuestionDetailRepository { get; }
+        public ITheoryLessonRepository TheoryLessonRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }

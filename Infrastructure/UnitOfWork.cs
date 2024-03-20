@@ -21,10 +21,13 @@ namespace Infrastructure
         private readonly IQuestionRepository _questionRepository;
         private readonly IChoiceRepository _choiceRepository;
         private readonly IQuestionDetailRepository _questionDetailRepository;
+        private readonly ITheoryLessonRepository _theoryLessonRepository;
         public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, 
             ISongRepository songRepository, ICourseRepository courseRepository, 
             IQuizRepository quizRepository, IQuizDetailRepository quizDetailRepository, 
-            IQuestionRepository questionRepository, IChoiceRepository choiceRepository,IQuestionDetailRepository questionDetailRepository, ILessonRepository lessonRepository)
+            IQuestionRepository questionRepository, IChoiceRepository choiceRepository,
+            IQuestionDetailRepository questionDetailRepository, ILessonRepository lessonRepository,
+            ITheoryLessonRepository theoryLessonRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
@@ -35,7 +38,8 @@ namespace Infrastructure
             _quizDetailRepository = quizDetailRepository;
             _questionRepository = questionRepository;
             _choiceRepository = choiceRepository;
-            _questionDetailRepository= questionDetailRepository;    
+            _questionDetailRepository = questionDetailRepository;
+            _theoryLessonRepository = theoryLessonRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
@@ -54,6 +58,8 @@ namespace Infrastructure
         public IQuizRepository QuizRepository =>_quizRepository;
 
         public IQuestionDetailRepository QuestionDetailRepository => _questionDetailRepository;
+
+        public ITheoryLessonRepository TheoryLessonRepository => _theoryLessonRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }

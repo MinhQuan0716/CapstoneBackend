@@ -22,7 +22,7 @@ namespace Infrastructure.Repository
             _appDbContext = appDbContext;
         }
 
-        public async Task<IEnumerable<CourseViewModel>> GetAllCourseAsync(Guid userId)
+        public async Task<IEnumerable<CourseViewModel>> GetAllCourseByUserIdAsync(Guid userId)
         {
             return await _appDbContext.Courses
                 .Include(x => x.Lessons)

@@ -62,7 +62,7 @@ namespace Application.Services
 
         public async Task<Respone> GetAllCourseByUserId(Guid userId)
         {
-            var result = await _unitOfWork.CourseRepository.GetAllCourseAsync(userId);
+            var result = await _unitOfWork.CourseRepository.GetAllCourseByUserIdAsync(userId);
             return new Respone(HttpStatusCode.OK, "fetch success", result);
         }
 
