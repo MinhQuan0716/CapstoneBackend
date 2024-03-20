@@ -164,5 +164,11 @@ namespace Application.Services
                 }
             return new Respone(HttpStatusCode.OK, "Send successfully");
         }
+
+        public async Task<Respone> GetAllAccount()
+        {
+            var result = await _unitOfWork.AccountRepository.GetAllAsync();
+            return new Respone(HttpStatusCode.OK, "fetch success", result);
+        }
     }
 }
