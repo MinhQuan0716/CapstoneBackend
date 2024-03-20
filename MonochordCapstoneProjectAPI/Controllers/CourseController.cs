@@ -19,7 +19,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
             _courseService = courseService;
         }
         /// <summary>
-        /// Get Course By lesson id
+        /// Get Course By User id
         /// </summary>
         /// <param name="Id">The user Id</param>
         /// <returns>Response Model</returns>
@@ -28,8 +28,13 @@ namespace MonochordCapstoneProjectAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCourse(Guid Id)
         {
-            var result = await _courseService.GetAllCourse(Id);
-            return Ok(result);
+            var result = await _courseService.GetAllCourseByUserId(Id);
+            if(result.Status==HttpStatusCode.OK.ToString())
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+            
         }
         /// <summary>
         /// Get course by courseId
@@ -44,23 +49,15 @@ namespace MonochordCapstoneProjectAPI.Controllers
 
             return Ok(result);
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateCourse(CourseDetailViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> GetAllCourse()
         {
-            var result = await _courseService.CreateCourse(model);
-            return Ok(result);
-        }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourt(Guid id, CourseDetailViewModel model)
-        {
-             var result = await _courseService.UpdateCourse(id, model);
-            return Ok(result);
-        }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCourt(Guid id)
-        {
-            var result = await _courseService.DeleteCourse(id);
-            return Ok(result);
+            var result = await _courseService.GetAllCourse();
+            if (result.Status == HttpStatusCode.OK.ToString())
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

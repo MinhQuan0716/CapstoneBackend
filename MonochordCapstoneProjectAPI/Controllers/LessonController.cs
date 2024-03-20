@@ -12,6 +12,11 @@ namespace MonochordCapstoneProjectAPI.Controllers
         {
             _lessonService = lessonService;
         }
+        /// <summary>
+        /// Get Lesson by CourseId
+        /// </summary>
+        /// <param name="id">The CourseId default value: ${Guid.NewGuid()}</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetLessonByCourseId(Guid id)
         {

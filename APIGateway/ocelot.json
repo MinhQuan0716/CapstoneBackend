@@ -110,6 +110,34 @@
       ],
       "DownstreamPathTemplate": "/api/v1/WebAccount/{action}/{id}"
     },
+
+    // Web API for Course
+    {
+      "UpstreamPathTemplate": "/api/v1/WebCourse/{action}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+
+          "Host": "webapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/WebCourse/{action}"
+    },
+    {
+      "UpstreamPathTemplate": "/api/v1/WebCourse/{action}/{id}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+
+          "Host": "webapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/v1/WebCourse/{action}/{id}"
+    },
     //Web API for Quiz
     {
       "UpstreamPathTemplate": "/api/v1/WebQuiz/{action}",

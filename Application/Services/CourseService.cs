@@ -50,7 +50,17 @@ namespace Application.Services
             return new Respone(HttpStatusCode.InternalServerError, "Delete False");
         }
 
-        public async Task<Respone> GetAllCourse(Guid userId)
+        public async Task<Respone> GetAllCourse()
+        {
+            List<Course> course = await _unitOfWork.CourseRepository.GetAllAsync();
+            if (course.Any())
+            {
+                return new Respone(HttpStatusCode.OK, "Fetch successfully", course);
+            }
+            return new Respone(HttpStatusCode.BadRequest, "Fetch error");
+        }
+
+        public async Task<Respone> GetAllCourseByUserId(Guid userId)
         {
             var result = await _unitOfWork.CourseRepository.GetAllCourseAsync(userId);
             return new Respone(HttpStatusCode.OK, "fetch success", result);
