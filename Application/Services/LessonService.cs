@@ -47,5 +47,10 @@ namespace Application.Services
             var result = await _unitOfWork.LessonRepository.GetByIdAsync(lessonId);
             return new Respone(HttpStatusCode.OK, "fetch success", result);
         }
+        public async Task<Respone> GetAllLesson()
+        {
+            var result = await _unitOfWork.LessonRepository.GetAllAsync();
+            return new Respone(HttpStatusCode.OK, "fetch success", result);
+        }
     }
 }

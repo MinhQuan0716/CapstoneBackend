@@ -8,6 +8,8 @@ using Application.ViewModel.ResponeModel;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using Application.ViewModel.ResetPasswordModel;
+using Application.Services;
+
 namespace MonochordCapstoneProjectAPI.Controllers
 {
    
@@ -89,6 +91,18 @@ namespace MonochordCapstoneProjectAPI.Controllers
         public async Task<Respone> ResetPassword(ResetPasswordDTO resetPasswordDTO)
         {
             var respone=await _accountService.ResetPassword(resetPasswordDTO);
+            return respone;
+        }
+        /// <summary>
+        /// Get all course
+        /// </summary>
+        /// <returns></returns>
+        [SwaggerResponse((int)HttpStatusCode.OK, "Get All Account", typeof(Respone))]
+        [Authorize]
+        [HttpGet]
+        public async Task<Respone> GetAllAccount()
+        {
+            var respone = await _accountService.GetAllAccount();
             return respone;
         }
     }
