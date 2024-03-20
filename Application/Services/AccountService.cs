@@ -164,5 +164,15 @@ namespace Application.Services
                 }
             return new Respone(HttpStatusCode.OK, "Send successfully");
         }
+
+        public async Task<Respone> GetAllAccount()
+        {
+            var listUser = await _unitOfWork.AccountRepository.GetAllAsync();
+            if (listUser.Any())
+            {
+                return new Respone(HttpStatusCode.OK, "Fetch success", listUser);
+            }
+            return new Respone(HttpStatusCode.BadRequest, "Fetch error");
+        }
     }
 }

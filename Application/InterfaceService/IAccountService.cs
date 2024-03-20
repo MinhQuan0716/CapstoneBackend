@@ -18,5 +18,6 @@ namespace Application.InterfaceService
         Task<Token> RefreshAccessTokenAsync(string refreshToken);
         Task<Respone> ResetPassword(ResetPasswordDTO resetPasswordDTO);
         Task<Respone> SendConfirmMailCode(string email);
+        Task<Respone> GetAllAccount();
     }
 }

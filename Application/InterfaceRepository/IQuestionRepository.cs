@@ -12,5 +12,6 @@ namespace Application.InterfaceRepository
     {
         Task<Guid> GetLastSavedQuestion();
         Task<IEnumerable<QuestionViewModel>> GetAllQuestions();
+        Task<IEnumerable<QuestionViewModel>> GetQuestionByQuizId(Guid quizId);
     }
 }

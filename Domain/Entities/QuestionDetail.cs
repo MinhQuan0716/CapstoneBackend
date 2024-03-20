@@ -13,5 +13,6 @@ namespace Domain.Entities
         public Guid ChoiceId { get; set; }
         public Choice Choice { get; set; }
         public int ChoiceOrder { get; set; }
+        public bool IsCorrect { get; set; }
     }
 }

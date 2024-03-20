@@ -1,4 +1,5 @@
 ﻿using Application.InterfaceService;
+using Application.ViewModel.ChoiceModel;
 using Application.ViewModel.QuestionModel;
 using Application.ViewModel.ResponeModel;
 using AutoMapper;
@@ -32,16 +33,19 @@ namespace Application.Services
             await _unitOfWork.SaveChangeAsync();
             int choiceOrder = 1;
             bool flag = false;
+            
             foreach (var choice in createQuestionModel.ChoiceList)
             {
-                Choice createChoice =_mapper.Map<Choice>(choice);
+                Choice createChoice = new Choice();
+                _ = _mapper.Map(choice, createChoice, typeof(CreateChoiceModel), typeof(Choice));
                 await _unitOfWork.ChoiceRepository.AddAsync(createChoice);
                 await _unitOfWork.SaveChangeAsync();
                 QuestionDetail questionDetail = new QuestionDetail
                 {
                     QuestionId= await _unitOfWork.QuestionRepository.GetLastSavedQuestion(),
                     ChoiceId= await _unitOfWork.ChoiceRepository.GetLastSavedChoice(),
-                    ChoiceOrder= choiceOrder
+                    ChoiceOrder= choiceOrder,
+                    IsCorrect=choice.IsCorrect,
                 };
                 choiceOrder++;
                 await _unitOfWork.QuestionDetailRepository.AddAsync(questionDetail);
@@ -52,7 +56,7 @@ namespace Application.Services
             {
                 return new Respone(HttpStatusCode.OK,"Create successfully");
             }
-            return new Respone(HttpStatusCode.InternalServerError, "Create failed",createQuestionModel);
+            return new Respone(HttpStatusCode.InternalServerError, "Create failed");
         }
 
         public async Task<Respone> DeleteQuestionAsync(Guid questionId)
@@ -86,6 +90,16 @@ namespace Application.Services
                 return new Respone(HttpStatusCode.OK, "Fetch success", questionViewModels);
             }
             return new Respone(HttpStatusCode.InternalServerError, "Fetch error",null);
+        }
+
+        public async Task<Respone> GetQuestionByQuizIdAsync(Guid quizId)
+        {
+           var result= await _unitOfWork.QuestionRepository.GetQuestionByQuizId(quizId);
+            if (result.Any())
+            {
+                return new Respone(HttpStatusCode.OK, "Fetch successfully",result);
+            }
+            return new Respone(HttpStatusCode.BadRequest, "Fetch failed");
         }
     }
 }

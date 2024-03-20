@@ -23,7 +23,7 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<QuestionViewModel>> GetAllQuestions()
         {
             
-            return await _appDbContext.Questions.Include(x => x.Choices).ThenInclude(y => y.Choice)
+            return await _appDbContext.Questions.Include(x => x.Choices).ThenInclude(y => y.Choice).Where(x=>x.IsDelete==false)
                 .Select(x => new QuestionViewModel
                 {
                     QuestionId=x.Id,
@@ -33,7 +33,7 @@ namespace Infrastructure.Repository
                     {
                         ChoiceId=x.Choice.Id,
                         ChoiceText=x.Choice.ChoiceText,
-                        IsCorrect=x.Choice.IsCorrect
+                        IsCorrect=x.IsCorrect
                     }).ToList(),
                 }
                 ).AsQueryable().ToListAsync();
@@ -43,6 +43,27 @@ namespace Infrastructure.Repository
         {
             Question question= await _appDbContext.Questions.OrderBy(x=>x.CreationDate).LastOrDefaultAsync();
             return question.Id;
+        }
+
+        public async Task<IEnumerable<QuestionViewModel>> GetQuestionByQuizId(Guid quizId)
+        {
+            return await _appDbContext.Questions
+                .Include(x => x.Choices)
+                .ThenInclude(z => z.Choice)
+                .Where(x=>x.QuizDetail.Select(x=>x.Quiz).Select(quiz=>quiz.Id).Contains(quizId)&&x.IsDelete==false)
+               .Select(x => new QuestionViewModel
+               {
+                   QuestionId = x.Id,
+                   QuestionText = x.QuestionText,
+                   Explainantion = x.Explaination,
+                   ChoiceList = x.Choices.Select(x => new ChoiceViewModel
+                   {
+                       ChoiceId = x.Choice.Id,
+                       ChoiceText = x.Choice.ChoiceText,
+                       IsCorrect = x.IsCorrect
+                   }).ToList(),
+               }
+               ).AsQueryable().ToListAsync();
         }
     }
 }
