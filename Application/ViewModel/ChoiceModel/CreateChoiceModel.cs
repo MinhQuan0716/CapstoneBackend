@@ -9,6 +9,6 @@ namespace Application.ViewModel.ChoiceModel
     public class CreateChoiceModel
     {
         public string ChoiceText { get; set; }  
-        public bool IsCorrect { get; set; } 
+        public bool IsCorrect { get; set; }
     }
 }

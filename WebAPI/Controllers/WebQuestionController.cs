@@ -33,6 +33,12 @@ namespace WebAPI.Controllers
             Respone respone=await _questionService.DeleteQuestionAsync(id);
             return respone;
         }
+        [HttpGet("{id}")]
+        public async Task<Respone> GetAllQuestionByQuizId(Guid id)
+        {
+            Respone respone = await _questionService.GetQuestionByQuizIdAsync(id);
+            return respone;
+        }
         
     }
 }
