@@ -39,6 +39,22 @@ namespace Application.Util
             //return true if needed
             return true;
         }
+        public static (string firstName, string lastName) SplitName(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return (null, null);
+            }
+
+            var parts = fullName.Split();
+            if (parts.Length == 1)
+            {
+                return (fullName, null); // No last name
+            }
+
+            return (parts[0], string.Join(' ', parts.Skip(1)));
+        }
+
     }
 }
 

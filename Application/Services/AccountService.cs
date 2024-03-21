@@ -73,6 +73,7 @@ namespace Application.Services
             newAcc.RoleId = 3;
             newAcc.PasswordHash = registerForm.Password.Hash();
             newAcc.IsDelete = false;
+            (newAcc.FirstName, newAcc.LastName) = StringUtil.SplitName(registerForm.FullName);
             await _unitOfWork.AccountRepository.AddAsync(newAcc);
             return await _unitOfWork.SaveChangeAsync() > 0;
         }

@@ -14,8 +14,7 @@ namespace Application.ViewModel.RegisterModel
         public string Password { get; set; }
         [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone number.")]
         public string PhoneNumber { get; set; } 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; set; }    
         public DateTime BirthDay { get; set; }
     }
 }
