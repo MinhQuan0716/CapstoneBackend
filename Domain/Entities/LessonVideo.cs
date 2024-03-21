@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public  class Video:BaseEntity
+    public  class LessonVideo:BaseEntity
     {
         public string VideoTitle { get; set; }
         public string VideoDesciption { get; set; }

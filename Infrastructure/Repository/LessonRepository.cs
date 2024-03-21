@@ -27,7 +27,7 @@ namespace Infrastructure.Repository
         .Select(lesson => new LessonViewModel
         {
             LessonName = lesson.LessonName,
-            LessonContent = lesson.LessonContent,
+            LessonDuration = lesson.LessonDuration,
             LessonType = GetLessonType(lesson),
         })
         .ToListAsync();

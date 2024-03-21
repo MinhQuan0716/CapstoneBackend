@@ -13,7 +13,7 @@ namespace Infrastructure
         public DbSet<ListNote> ListNotes { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<Video> Videos { get; set; }
+        public DbSet<LessonVideo> Videos { get; set; }
         public DbSet<TheoryLesson> TheoryLessons { get; set; }
         public DbSet<PraticeLesson> PracticeLessons { get; set; }
         public DbSet<UserProgress> UserProgresses { get; set; }

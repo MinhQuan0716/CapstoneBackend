@@ -13,7 +13,7 @@ namespace Domain.Entities
         public Guid CourseId { get; set; }
         public Course Course { get; set;}
         public decimal ProgressPercentage { get; set; }
-        public DateTime? LastWatchedTime { get; set; }
+        public bool IsCompleted { get; set; }
 
     }
 }

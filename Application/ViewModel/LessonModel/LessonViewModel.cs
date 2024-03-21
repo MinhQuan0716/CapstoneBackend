@@ -9,7 +9,7 @@ namespace Application.ViewModel.LessonModel
     public class LessonViewModel
     {
         public string LessonName { get; set; }
-        public string LessonContent { get; set; }
+        public TimeSpan LessonDuration { get; set; }
         public string LessonType { get; set; }
     }
 }

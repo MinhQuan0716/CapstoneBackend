@@ -29,7 +29,6 @@ namespace Infrastructure.Repository
                 .Select(x => new CourseViewModel
             {
                 CourseName = x.CourseName,
-                Duration = x.Duration,
                 CourseDescription = x.CourseDescription,
                 numberLesson = x.Lessons.Count(),
                 progress = _appDbContext.UserProgresses.Where(z => z.CourseId == x.Id && z.AccountId == userId).Select(z => z.ProgressPercentage).FirstOrDefault()

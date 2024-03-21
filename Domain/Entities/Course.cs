@@ -10,7 +10,7 @@ namespace Domain.Entities
     {
         public string CourseName { get; set; }
         public string CourseDescription { get;set; }
-        public DateTime Duration { get; set; }
+        public bool IsPremium { get; set; }
         public string? ImageUrl { get; set; }
         public ICollection<Lesson> Lessons { get; set; }
     }

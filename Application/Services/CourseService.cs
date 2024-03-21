@@ -78,7 +78,6 @@ namespace Application.Services
             {
                 obj.CourseDescription = model.CourseDescription;
                 obj.CourseName = model.CourseName;
-                obj.Duration = model.Duration;
 
                 _unitOfWork.CourseRepository.Update(obj);
                 var result = await _unitOfWork.SaveChangeAsync();
