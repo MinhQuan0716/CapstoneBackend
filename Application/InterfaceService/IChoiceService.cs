@@ -11,5 +11,7 @@ namespace Application.InterfaceService
     public interface IChoiceService
     {
         Task<Respone> UpdateChoice(Guid choiceId, UpdateChoiceModel updateChoiceModel);
+        Task<Respone> CreateChoiceAsync(CreateChoiceModel choiceModel);
+        Task<Respone> DeleteChoiceAsync(Guid choiceId);
     }
 }

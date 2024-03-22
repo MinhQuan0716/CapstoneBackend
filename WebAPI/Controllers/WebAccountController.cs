@@ -1,6 +1,7 @@
 ﻿using Application.InterfaceService;
 using Application.ViewModel.Login_Model;
 using Application.ViewModel.RegisterModel;
+using Application.ViewModel.ResponeModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,13 @@ namespace WebAPI.Controllers
                 return Ok(accessToken);
             }
             return BadRequest();
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<Respone> GetCurrentLoginUser()
+        {
+            var respone = await _accountService.GetCurrentLoginUser();
+            return respone;
         }
     }
 }

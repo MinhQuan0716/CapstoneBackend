@@ -22,10 +22,16 @@ namespace WebAPI.Controllers
             return respone;
         }
         [HttpPost]
+        public async Task<IActionResult> CreateQuestionWithChoice(CreateQuestionWithChoiceModel createQuestionModel)
+        {
+            Respone response=await _questionService.AddQuestionWithChoiceAsync(createQuestionModel);
+            return Ok(response);
+        }
+        [HttpPost]
         public async Task<IActionResult> CreateQuestion(CreateQuestionModel createQuestionModel)
         {
-            Respone response=await _questionService.AddQuestionAsync(createQuestionModel);
-            return Ok(response);
+            Respone respone= await _questionService.CreateQuestionAsync(createQuestionModel);
+            return Ok(respone);
         }
         [HttpDelete("{id}")]
         public async Task<Respone> DeleteQuestion(Guid id)

@@ -105,5 +105,12 @@ namespace MonochordCapstoneProjectAPI.Controllers
             var respone = await _accountService.GetAllAccount();
             return respone;
         }
+        [Authorize]
+        [HttpGet]
+        public async Task<Respone> GetCurrentLoginUser()
+        {
+            var respone= await _accountService.GetCurrentLoginUser();
+            return respone;
+        }
     }
 }

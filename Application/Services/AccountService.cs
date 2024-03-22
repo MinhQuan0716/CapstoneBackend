@@ -175,5 +175,15 @@ namespace Application.Services
             }
             return new Respone(HttpStatusCode.BadRequest, "Fetch error");
         }
+
+        public async Task<Respone> GetCurrentLoginUser()
+        {
+            var user = await _unitOfWork.AccountRepository.GetByIdAsync(_claimService.GetCurrentUserId);
+            if(user == null)
+            {
+                return new Respone(HttpStatusCode.BadRequest, "Get failed");
+            }
+            return new Respone(HttpStatusCode.OK, "Get success", user);
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace Application.InterfaceService
         Task<Respone> ResetPassword(ResetPasswordDTO resetPasswordDTO);
         Task<Respone> SendConfirmMailCode(string email);
         Task<Respone> GetAllAccount();
+        Task<Respone> GetCurrentLoginUser();
     }
 }

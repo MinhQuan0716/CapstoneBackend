@@ -41,8 +41,9 @@ namespace Infrastructure.Mappers
         }
         internal void CreateQuestionMap()
         {
-            CreateMap<CreateQuestionModel,Question>().ReverseMap();
-            CreateMap<UpdateQuestionViewModel,Question>().ReverseMap(); 
+            CreateMap<CreateQuestionWithChoiceModel,Question>().ReverseMap();
+            CreateMap<UpdateQuestionViewModel,Question>().ReverseMap();
+            CreateMap<CreateQuestionModel, Question>().ReverseMap();
         }
         internal void CreateChoiceMap()
         {

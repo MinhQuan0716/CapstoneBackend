@@ -22,7 +22,7 @@ namespace Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<Respone> AddQuestionAsync(CreateQuestionModel createQuestionModel)
+        public async Task<Respone> AddQuestionWithChoiceAsync(CreateQuestionWithChoiceModel createQuestionModel)
         {
             Question createdQuestion = new Question
             {
@@ -59,15 +59,26 @@ namespace Application.Services
             return new Respone(HttpStatusCode.InternalServerError, "Create failed");
         }
 
+        public async Task<Respone> CreateQuestionAsync(CreateQuestionModel questionModel)
+        {
+            Question creaeQuestion = _mapper.Map<Question>(questionModel);
+            await _unitOfWork.QuestionRepository.AddAsync(creaeQuestion);
+            if(await _unitOfWork.SaveChangeAsync() > 0)
+            {
+                return new Respone(HttpStatusCode.OK, "Create successfully");
+            }
+            return new Respone(HttpStatusCode.InternalServerError, "Create failed");
+        }
+
         public async Task<Respone> DeleteQuestionAsync(Guid questionId)
         {
-            List<Choice> choiceList = new List<Choice>();
+            /*List<Choice> choiceList = new List<Choice>();*/
             Question question= await _unitOfWork.QuestionRepository.GetByIdAsync(questionId);
             List<Guid> choiceIdList = await _unitOfWork.QuestionDetailRepository.GetAllChoiceInQuestionDetail(questionId);
             foreach (var choiceId in choiceIdList)
             {
-                Choice choice = await _unitOfWork.ChoiceRepository.GetByIdAsync(choiceId);
-                choiceList.Add(choice);
+                /*Choice choice = await _unitOfWork.ChoiceRepository.GetByIdAsync(choiceId);
+                choiceList.Add(choice);*/
                 QuestionDetail questionDetail = await _unitOfWork.QuestionDetailRepository.GetQuestionDetail(questionId,choiceId);
                 _unitOfWork.QuestionDetailRepository.SoftRemove(questionDetail);
             }

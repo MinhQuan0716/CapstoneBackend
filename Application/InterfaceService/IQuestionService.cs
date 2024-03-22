@@ -9,9 +9,10 @@ namespace Application.InterfaceService
 {
     public interface IQuestionService
     {
-       Task<Respone> AddQuestionAsync(CreateQuestionModel createQuestionModel);
+       Task<Respone> AddQuestionWithChoiceAsync(CreateQuestionWithChoiceModel createQuestionModel);
         Task<Respone> GetAllQuestionAsync();
         Task<Respone> DeleteQuestionAsync(Guid questionId);
         Task<Respone> GetQuestionByQuizIdAsync(Guid quizId);
+        Task<Respone> CreateQuestionAsync(CreateQuestionModel questionModel);
     }
 }

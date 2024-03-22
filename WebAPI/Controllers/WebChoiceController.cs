@@ -14,10 +14,22 @@ namespace WebAPI.Controllers
         {
             _choiceService = choiceService;
         }
+        [HttpPost]
+        public async Task<Respone> CreateChoice(CreateChoiceModel model)
+        {
+            Respone respone=await _choiceService.CreateChoiceAsync(model);
+            return respone;
+        }
         [HttpPut("{id}")]
         public async Task<Respone> UpdateChoice(Guid id,UpdateChoiceModel updateChoiceModel)
         {
             Respone respone=await _choiceService.UpdateChoice(id,updateChoiceModel);
+            return respone;
+        }
+        [HttpDelete("{id}")]
+        public async Task<Respone> DeleteChoice(Guid id)
+        {
+            Respone respone=await _choiceService.DeleteChoiceAsync(id);
             return respone;
         }
     }

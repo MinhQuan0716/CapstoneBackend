@@ -29,6 +29,17 @@ namespace Infrastructure.Repository
             return choiceIdInQuestionDetail;
         }
 
+        public async Task<List<Guid>> GetAllQuestionInQuestionDetail(Guid choiceId)
+        {
+            List<QuestionDetail> questionDetails = await _appDbContext.QuestionDetails.Where(x => x.ChoiceId == choiceId).ToListAsync();
+            List<Guid> questionIdInQuestionDetail = new List<Guid>();
+            foreach (var question in questionDetails)
+            {
+                questionIdInQuestionDetail.Add(question.QuestionId);
+            }
+            return questionIdInQuestionDetail;
+        }
+
         public async Task<QuestionDetail> GetQuestionDetail(Guid questionId,Guid choiceId)
         {
             return await _appDbContext.QuestionDetails.FindAsync(questionId, choiceId);
