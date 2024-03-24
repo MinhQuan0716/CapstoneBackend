@@ -61,7 +61,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, "Get All Lesson", typeof(Respone))]
         [Authorize]
         [HttpGet]
-        public async Task<Respone> GetAllAccount()
+        public async Task<Respone> GetAllLesson()
         {
             var respone = await _lessonService.GetAllLesson();
             return respone;
