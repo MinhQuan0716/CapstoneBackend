@@ -9,6 +9,9 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using Application.ViewModel.ResetPasswordModel;
 using Application.Services;
+using Application.ViewModel.CourseModel;
+using Application.ViewModel.AccountModel;
+using Application.ViewModel.UpdatePasswordModel;
 
 namespace MonochordCapstoneProjectAPI.Controllers
 {
@@ -127,6 +130,20 @@ namespace MonochordCapstoneProjectAPI.Controllers
                 return Ok(newToken);
             }
             return BadRequest();
+        }
+        [SwaggerResponse((int)HttpStatusCode.OK, "Update account", typeof(Respone))]
+        [HttpPut("{id}")]
+        public async Task<Respone> UpdateAccount(Guid id, AccountViewModel model)
+        {
+            var respone = await _accountService.UpdateAccount(id, model);
+            return respone;
+        }
+        [SwaggerResponse((int)HttpStatusCode.OK, "Update password success", typeof(Respone))]
+        [HttpPost]
+        public async Task<Respone> UpdateAccountPassword(Guid id, UpdatePasswordDTO updatePasswordDTO)
+        {
+            var respone = await _accountService.UpdatePassword(id, updatePasswordDTO);
+            return respone;
         }
     }
 }

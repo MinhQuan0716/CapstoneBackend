@@ -18,6 +18,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using Google.Apis.Auth;
+using Application.ViewModel.AccountModel;
+using System.Reflection;
+using Application.ViewModel.UpdatePasswordModel;
 
 namespace Application.Services
 {
@@ -235,6 +238,51 @@ namespace Application.Services
                 // Other exceptions
                 throw new Exception("Failed to validate token", ex);
             }
+        }
+
+        public async Task<Respone> UpdateAccount(Guid accountId, AccountViewModel accountViewModel)
+        {
+            var user = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+            if (user != null)
+            {
+                var newAcc = _mapper.Map<Account>(accountViewModel);
+                _unitOfWork.AccountRepository.Update(newAcc);
+                var result = await _unitOfWork.SaveChangeAsync();
+                if (result > 0)
+                {
+                    return new Respone(HttpStatusCode.OK, "Update Suceess", accountViewModel);
+                }
+            }
+            return new Respone(HttpStatusCode.InternalServerError, "Update False");
+        }
+        public async Task<Respone> UpdatePassword(Guid accountId, UpdatePasswordDTO updatePasswordDTO)
+        {
+            if (updatePasswordDTO.NewPassword.Equals(updatePasswordDTO.ConfirmPassword))
+            {
+                var user = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+                if (user != null)
+                {
+                    updatePasswordDTO.OldPassword = updatePasswordDTO.OldPassword.Hash();
+                    if (user.PasswordHash == updatePasswordDTO.OldPassword)
+                    {
+                        _ = _mapper.Map(updatePasswordDTO, user, typeof(UpdatePasswordDTO), typeof(Account));
+                        _unitOfWork.AccountRepository.Update(user);
+                        if (await _unitOfWork.SaveChangeAsync() > 0)
+                        {
+                            return new Respone(HttpStatusCode.OK, "Update successfully");
+                        }
+                        else
+                        {
+                            return new Respone(HttpStatusCode.InternalServerError, "Update fail");
+                        }
+                    }
+                    else
+                    {
+                        return new Respone(HttpStatusCode.BadRequest, "Old password not correct");
+                    }
+                }
+            }
+            return new Respone(HttpStatusCode.BadRequest, "Password and Confirm Passord do not match");
         }
     }
 }

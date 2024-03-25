@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.ViewModel.AccountModel;
+using Application.ViewModel.UpdatePasswordModel;
 
 namespace Application.InterfaceService
 {
@@ -22,5 +24,7 @@ namespace Application.InterfaceService
         Task<Respone> GetAllAccount();
         Task<Respone> GetCurrentLoginUser();
         Task<Token> LoginGoogle(string token);
+        Task<Respone> UpdateAccount(Guid accountId, AccountViewModel accountViewModel);
+        Task<Respone> UpdatePassword(Guid accountId, UpdatePasswordDTO updatePasswordDTO)
     }
 }
