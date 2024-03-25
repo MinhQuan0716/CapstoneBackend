@@ -245,7 +245,7 @@ namespace Application.Services
             var user = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
             if (user != null)
             {
-                _ =  _mapper.Map(accountViewModel, user, typeof(AccountViewModel), typeof(Account));
+                _mapper.Map(accountViewModel, user, typeof(AccountViewModel), typeof(Account));
                 _unitOfWork.AccountRepository.Update(user);
                 var result = await _unitOfWork.SaveChangeAsync();
                 if (result > 0)
@@ -265,7 +265,7 @@ namespace Application.Services
                     updatePasswordDTO.OldPassword = updatePasswordDTO.OldPassword.Hash();
                     if (user.PasswordHash == updatePasswordDTO.OldPassword)
                     {
-                        _ = _mapper.Map(updatePasswordDTO, user, typeof(UpdatePasswordDTO), typeof(Account));
+                        _mapper.Map(updatePasswordDTO, user, typeof(UpdatePasswordDTO), typeof(Account));
                         _unitOfWork.AccountRepository.Update(user);
                         if (await _unitOfWork.SaveChangeAsync() > 0)
                         {
