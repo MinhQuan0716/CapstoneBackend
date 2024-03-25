@@ -245,8 +245,8 @@ namespace Application.Services
             var user = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
             if (user != null)
             {
-                var newAcc = _mapper.Map<Account>(accountViewModel);
-                _unitOfWork.AccountRepository.Update(newAcc);
+                _ =  _mapper.Map(accountViewModel, user, typeof(AccountViewModel), typeof(Account));
+                _unitOfWork.AccountRepository.Update(user);
                 var result = await _unitOfWork.SaveChangeAsync();
                 if (result > 0)
                 {

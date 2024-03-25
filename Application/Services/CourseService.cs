@@ -1,4 +1,5 @@
 ﻿using Application.InterfaceService;
+using Application.ViewModel.AccountModel;
 using Application.ViewModel.CourseModel;
 using Application.ViewModel.ResponeModel;
 using AutoMapper;
@@ -76,9 +77,7 @@ namespace Application.Services
             var obj = await _unitOfWork.CourseRepository.GetByIdAsync(CourseId);
             if (obj is not null)
             {
-                obj.CourseDescription = model.CourseDescription;
-                obj.CourseName = model.CourseName;
-
+                _mapper.Map(model, obj, typeof(CourseDetailViewModel), typeof(Course));
                 _unitOfWork.CourseRepository.Update(obj);
                 var result = await _unitOfWork.SaveChangeAsync();
                 if (result > 0)
