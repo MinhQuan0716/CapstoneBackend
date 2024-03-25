@@ -17,6 +17,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Google.Apis.Auth;
+
 namespace Application.Services
 {
     public class AccountService : IAccountService
@@ -184,6 +186,55 @@ namespace Application.Services
                 return new Respone(HttpStatusCode.BadRequest, "Get failed");
             }
             return new Respone(HttpStatusCode.OK, "Get success", user);
+        }
+
+        public async Task<Token> LoginGoogle(string token)
+        {
+            try
+            {
+                var payload = await GoogleJsonWebSignature.ValidateAsync(token);
+                string userId = payload.Subject;
+                string email = payload.Email; 
+                string firstName = payload.GivenName;
+                string lastName = payload.FamilyName;
+                string pictureUrl = payload.Picture; 
+                Account loginAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
+                if (loginAccount == null)
+                {
+                    var newAcc = new Account();
+                    newAcc.Email = email;
+                    newAcc.RoleId = 3;
+                    newAcc.IsDelete = false;
+                    newAcc.FirstName = firstName;
+                    newAcc.LastName = lastName;
+                    newAcc.ImageUrl = pictureUrl;
+                    await _unitOfWork.AccountRepository.AddAsync(newAcc);
+                    await _unitOfWork.SaveChangeAsync();
+                    loginAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
+                }
+                var refreshToken = RefreshToken.GetRefreshToken();
+                var accessToken = loginAccount.GenerateTokenString(_configuration!.JwtSecretKey, DateTime.Now);
+                var expireRefreshTokenTime = DateTime.Now.AddHours(24);
+                await _unitOfWork.SaveChangeAsync();
+                _cacheService.SetData(loginAccount.Id.ToString(), refreshToken, DateTime.Now.AddMinutes(30));
+                return new Token
+                {
+                    Username = loginAccount.UserName,
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    RoleName = loginAccount.Role.RoleName
+                };
+            }
+            catch (InvalidJwtException ex)
+            {
+                // Token is invalid
+                throw new Exception("Invalid token", ex);
+            }
+            catch (Exception ex)
+            {
+                // Other exceptions
+                throw new Exception("Failed to validate token", ex);
+            }
         }
     }
 }

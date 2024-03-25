@@ -2,6 +2,7 @@
 using Application.ViewModel.RegisterModel;
 using Application.ViewModel.ResetPasswordModel;
 using Application.ViewModel.ResponeModel;
+using Google.Apis.Auth;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace Application.InterfaceService
         Task<Respone> SendConfirmMailCode(string email);
         Task<Respone> GetAllAccount();
         Task<Respone> GetCurrentLoginUser();
+        Task<Token> LoginGoogle(string token);
     }
 }

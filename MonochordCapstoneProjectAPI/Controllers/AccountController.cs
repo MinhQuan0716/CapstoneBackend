@@ -112,5 +112,21 @@ namespace MonochordCapstoneProjectAPI.Controllers
             var respone= await _accountService.GetCurrentLoginUser();
             return respone;
         }
+        /// <summary>
+        /// Login with google
+        /// </summary>
+        /// <param name="google_access_token">access token return by google api</param>
+        /// <returns></returns>
+        [SwaggerResponse((int)HttpStatusCode.OK, "Login by access_token", typeof(Token))]
+        [HttpPost]
+        public async Task<IActionResult> LoginWithGoogle(string token)
+        {
+            Token newToken = await _accountService.LoginGoogle(token);
+            if (newToken != null)
+            {
+                return Ok(newToken);
+            }
+            return BadRequest();
+        }
     }
 }
