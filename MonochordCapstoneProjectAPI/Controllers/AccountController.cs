@@ -75,8 +75,8 @@ namespace MonochordCapstoneProjectAPI.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK,"Send success",typeof(Respone))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Cannot send mail", typeof(Respone))]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Mail do not existed", typeof(Respone))]
-        [HttpGet]
-        public async Task<Respone> ForgotPassword(string email)
+        [HttpGet("{email}")]
+        public async Task<Respone> ForgotPassword([FromRoute]string email)
         {
             var response= await _accountService.SendConfirmMailCode(email);
             return response;
