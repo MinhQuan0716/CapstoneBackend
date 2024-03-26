@@ -51,13 +51,13 @@ namespace MonochordCapstoneProjectAPI.Controllers
             return Ok(result);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourt(Guid id, CourseDetailViewModel model)
+        public async Task<IActionResult> UpdateCourse(Guid id, CourseDetailViewModel model)
         {
              var result = await _courseService.UpdateCourse(id, model);
             return Ok(result);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCourt(Guid id)
+        public async Task<IActionResult> DeleteCourse(Guid id)
         {
             var result = await _courseService.DeleteCourse(id);
             return Ok(result);

@@ -25,6 +25,6 @@ namespace Application.InterfaceService
         Task<Respone> GetCurrentLoginUser();
         Task<Token> LoginGoogle(string token);
         Task<Respone> UpdateAccount(Guid accountId, AccountViewModel accountViewModel);
-        Task<Respone> UpdatePassword(Guid accountId, UpdatePasswordDTO updatePasswordDTO)
+        Task<Respone> UpdatePassword(Guid accountId, UpdatePasswordDTO updatePasswordDTO);
     }
 }
