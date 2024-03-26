@@ -9,6 +9,9 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using Application.ViewModel.ResetPasswordModel;
 using Application.Services;
+using Application.ViewModel.CourseModel;
+using Application.ViewModel.AccountModel;
+using Application.ViewModel.UpdatePasswordModel;
 
 namespace MonochordCapstoneProjectAPI.Controllers
 {
@@ -110,6 +113,36 @@ namespace MonochordCapstoneProjectAPI.Controllers
         public async Task<Respone> GetCurrentLoginUser()
         {
             var respone= await _accountService.GetCurrentLoginUser();
+            return respone;
+        }
+        /// <summary>
+        /// Login with google
+        /// </summary>
+        /// <param name="google_access_token">access token return by google api</param>
+        /// <returns></returns>
+        [SwaggerResponse((int)HttpStatusCode.OK, "Login by access_token", typeof(Token))]
+        [HttpPost]
+        public async Task<IActionResult> LoginWithGoogle(string token)
+        {
+            Token newToken = await _accountService.LoginGoogle(token);
+            if (newToken != null)
+            {
+                return Ok(newToken);
+            }
+            return BadRequest();
+        }
+        [SwaggerResponse((int)HttpStatusCode.OK, "Update account", typeof(Respone))]
+        [HttpPut("{id}")]
+        public async Task<Respone> UpdateAccount(Guid id, AccountViewModel model)
+        {
+            var respone = await _accountService.UpdateAccount(id, model);
+            return respone;
+        }
+        [SwaggerResponse((int)HttpStatusCode.OK, "Update password success", typeof(Respone))]
+        [HttpPost]
+        public async Task<Respone> UpdateAccountPassword(Guid id, UpdatePasswordDTO updatePasswordDTO)
+        {
+            var respone = await _accountService.UpdatePassword(id, updatePasswordDTO);
             return respone;
         }
     }

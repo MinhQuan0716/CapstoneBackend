@@ -17,6 +17,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Google.Apis.Auth;
+using Application.ViewModel.AccountModel;
+using System.Reflection;
+using Application.ViewModel.UpdatePasswordModel;
+
 namespace Application.Services
 {
     public class AccountService : IAccountService
@@ -184,6 +189,100 @@ namespace Application.Services
                 return new Respone(HttpStatusCode.BadRequest, "Get failed");
             }
             return new Respone(HttpStatusCode.OK, "Get success", user);
+        }
+
+        public async Task<Token> LoginGoogle(string token)
+        {
+            try
+            {
+                var payload = await GoogleJsonWebSignature.ValidateAsync(token);
+                string userId = payload.Subject;
+                string email = payload.Email; 
+                string firstName = payload.GivenName;
+                string lastName = payload.FamilyName;
+                string pictureUrl = payload.Picture; 
+                Account loginAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
+                if (loginAccount == null)
+                {
+                    var newAcc = new Account();
+                    newAcc.Email = email;
+                    newAcc.RoleId = 3;
+                    newAcc.IsDelete = false;
+                    newAcc.FirstName = firstName;
+                    newAcc.LastName = lastName;
+                    newAcc.ImageUrl = pictureUrl;
+                    await _unitOfWork.AccountRepository.AddAsync(newAcc);
+                    await _unitOfWork.SaveChangeAsync();
+                    loginAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
+                }
+                var refreshToken = RefreshToken.GetRefreshToken();
+                var accessToken = loginAccount.GenerateTokenString(_configuration!.JwtSecretKey, DateTime.Now);
+                var expireRefreshTokenTime = DateTime.Now.AddHours(24);
+                await _unitOfWork.SaveChangeAsync();
+                _cacheService.SetData(loginAccount.Id.ToString(), refreshToken, DateTime.Now.AddMinutes(30));
+                return new Token
+                {
+                    Username = loginAccount.UserName,
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    RoleName = loginAccount.Role.RoleName
+                };
+            }
+            catch (InvalidJwtException ex)
+            {
+                // Token is invalid
+                throw new Exception("Invalid token", ex);
+            }
+            catch (Exception ex)
+            {
+                // Other exceptions
+                throw new Exception("Failed to validate token", ex);
+            }
+        }
+
+        public async Task<Respone> UpdateAccount(Guid accountId, AccountViewModel accountViewModel)
+        {
+            var user = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+            if (user != null)
+            {
+                _mapper.Map(accountViewModel, user, typeof(AccountViewModel), typeof(Account));
+                _unitOfWork.AccountRepository.Update(user);
+                var result = await _unitOfWork.SaveChangeAsync();
+                if (result > 0)
+                {
+                    return new Respone(HttpStatusCode.OK, "Update Suceess", accountViewModel);
+                }
+            }
+            return new Respone(HttpStatusCode.InternalServerError, "Update False");
+        }
+        public async Task<Respone> UpdatePassword(Guid accountId, UpdatePasswordDTO updatePasswordDTO)
+        {
+            if (updatePasswordDTO.NewPassword.Equals(updatePasswordDTO.ConfirmPassword))
+            {
+                var user = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+                if (user != null)
+                {
+                    updatePasswordDTO.OldPassword = updatePasswordDTO.OldPassword.Hash();
+                    if (user.PasswordHash == updatePasswordDTO.OldPassword)
+                    {
+                        _mapper.Map(updatePasswordDTO, user, typeof(UpdatePasswordDTO), typeof(Account));
+                        _unitOfWork.AccountRepository.Update(user);
+                        if (await _unitOfWork.SaveChangeAsync() > 0)
+                        {
+                            return new Respone(HttpStatusCode.OK, "Update successfully");
+                        }
+                        else
+                        {
+                            return new Respone(HttpStatusCode.InternalServerError, "Update fail");
+                        }
+                    }
+                    else
+                    {
+                        return new Respone(HttpStatusCode.BadRequest, "Old password not correct");
+                    }
+                }
+            }
+            return new Respone(HttpStatusCode.BadRequest, "Password and Confirm Passord do not match");
         }
     }
 }
