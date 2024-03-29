@@ -11,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class TheoryLessonService : ITheoryLessonService
+    public class TheoryUnitService : ITheoryUnitService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public TheoryLessonService(IUnitOfWork unitOfWork, IMapper mapper)
+        public TheoryUnitService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Respone> GetAllTheoryLesson()
+        public async Task<Respone> GetAllTheoryUnit()
         {
-            var result = await _unitOfWork.TheoryLessonRepository.GetAllAsync();
+            var result = await _unitOfWork.TheoryUnitRepository.GetAllAsync();
             return new Respone(HttpStatusCode.OK, "Fetch successfully", result);
         }
 
-        public async Task<Respone> GetAllTheoryLessonByLessonId(Guid lessonId)
+        public async Task<Respone> GetAllTheoryUnitByUnitId(Guid unitId)
         {
-            var result = await _unitOfWork.TheoryLessonRepository.GetAllTheoryLessonByLessonId(lessonId);
+            var result = await _unitOfWork.TheoryUnitRepository.GetAllTheoryUnitByUnitId(unitId);
             return new Respone(HttpStatusCode.OK, "fetch success", result);
         }
     }

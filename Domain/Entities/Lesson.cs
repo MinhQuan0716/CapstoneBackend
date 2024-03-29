@@ -9,11 +9,10 @@ namespace Domain.Entities
     public  class Lesson:BaseEntity
     {
         public string LessonName { get; set; }
-        public TimeSpan LessonDuration { get; set; }
-        public Guid CourseId { get; set; }
-        public Course Course { get; set; }
-        public ICollection<LessonVideo> Videos { get; set; }
-        public ICollection<Quiz> Quizzes { get; set; }
-        public ICollection<TheoryLesson> TheoryLessons { get; set;}
+        public string LessonDescription { get;set; }
+        public bool IsPremium { get; set; }
+        public string? ImageUrl { get; set; }
+        public int LessonOrder {  get; set; }
+        public ICollection<Unit> Units { get; set; }
     }
 }

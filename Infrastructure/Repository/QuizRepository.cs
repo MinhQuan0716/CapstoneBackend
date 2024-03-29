@@ -28,18 +28,18 @@ namespace Infrastructure.Repository
             return lastSaveQuiz.Id;
         }
 
-        public async Task<List<QuizViewModel>> GetQuizByLessonId(Guid lessonId)
+       /* public async Task<List<QuizViewModel>> GetQuizByLessonId(Guid unitId)
         {
             return  await _appDbContext.Quizzes.Include(x => x.Questions)
                                              .ThenInclude(y => y.Question)
                                               .ThenInclude(z => z.Choices)
-                                              .Where(x => x.LessonId == lessonId)
+                                              .Where(x => x.UnitId == unitId)
                                               .Select(x => new QuizViewModel
                                               {
                                                   QuestionTextList=x.Questions.Select(y=>y.Question.QuestionText).ToList(),
                                                   ChoiceList=x.Questions.SelectMany(y=>y.Question.Choices.Select(z=>z.Choice.ChoiceText)).ToList(),
                                               }).AsQueryable().ToListAsync();
-        }
+        }*/
 
         public IQueryable<Quiz> GetQuizQueryableForPagination()
         {
@@ -50,9 +50,13 @@ namespace Infrastructure.Repository
                                               .AsQueryable();
             return query;
         }
-        public async Task<Pagination<QuizViewModel>> GetPaginationQuiz(Guid lessonId,int pageIndex,int pageSize)
+        public Expression<Func<Quiz, bool>> GetExpression(Guid unitId)
         {
-            var expression= GetExpression(lessonId);
+            return quiz => quiz.UnitId == unitId;
+        }
+        public async Task<Pagination<QuizViewModel>> GetPaginationQuiz(Guid unitId,int pageIndex,int pageSize)
+        {
+            var expression= GetExpression(unitId);
             var queryable = GetQuizQueryableForPagination();
             var quizPagination = await ToPagination(queryable,expression,pageIndex,pageSize);
             var listQuizViewModel= new List<QuizViewModel>();
@@ -72,11 +76,6 @@ namespace Infrastructure.Repository
                 PageSize = pageSize,
                 TotalItemsCount=quizPagination.TotalItemsCount
             };
-        }
-
-        public Expression<Func<Quiz, bool>> GetExpression(Guid lessonId)
-        {
-            return quiz => quiz.LessonId == lessonId;
         }
     }
 }

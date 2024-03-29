@@ -11,11 +11,11 @@ namespace Infrastructure
         }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<ListNote> ListNotes { get; set; }
-        public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<LessonVideo> Videos { get; set; }
-        public DbSet<TheoryLesson> TheoryLessons { get; set; }
-        public DbSet<PraticeLesson> PracticeLessons { get; set; }
+        public DbSet<Unit> Units { get; set; }
+        public DbSet<UnitVideo> UnitVideos { get; set; }
+        public DbSet<TheoryUnit> TheoryUnits { get; set; }
+        public DbSet<PraticeUnit> PracticeUnits { get; set; }
         public DbSet<UserProgress> UserProgresses { get; set; }
         public DbSet<UserQuizAttempt> UserQuizAttempts { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }

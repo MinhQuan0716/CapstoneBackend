@@ -13,10 +13,10 @@ namespace Application.InterfaceRepository
     public interface IQuizRepository:IGenericRepository<Quiz>
     {
         Task<Guid> GetLastSaveQuizId();
-        Task<List<QuizViewModel>> GetQuizByLessonId(Guid lessonId);
+        /*Task<List<QuizViewModel>> GetQuizByUnitId(Guid unitId);*/
         IQueryable<Quiz> GetQuizQueryableForPagination();
-        Expression<Func<Quiz, bool>> GetExpression(Guid lessonId);
-        Task<Pagination<QuizViewModel>> GetPaginationQuiz(Guid lessonId, int pageIndex, int pageSize);
+        Expression<Func<Quiz, bool>> GetExpression(Guid unitId);
+        Task<Pagination<QuizViewModel>> GetPaginationQuiz(Guid unitId, int pageIndex, int pageSize);
         /*Task<Pagination<QuizViewModel>> GetQuizPaginatedByLessonId(Guid lessonId);*/
     }
 }

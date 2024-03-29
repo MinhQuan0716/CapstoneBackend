@@ -10,16 +10,16 @@ namespace Application
 {
     public interface IUnitOfWork
     {
-        public ILessonRepository LessonRepository { get; }
+        public IUnitRepository UnitRepository { get; }
         public IAccountRepository AccountRepository { get; }
         public ISongRepository SongRepository { get; }
-        public ICourseRepository CourseRepository { get; }
+        public ILessonRepository LessonRepository { get; }
         public IQuestionRepository QuestionRepository { get; }
         public IChoiceRepository ChoiceRepository { get; }
         public IQuizDetailRepository QuizDetailRepository { get; }
         public IQuizRepository QuizRepository { get; }
         public IQuestionDetailRepository QuestionDetailRepository { get; }
-        public ITheoryLessonRepository TheoryLessonRepository { get; }
+        public ITheoryUnitRepository TheoryUnitRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }

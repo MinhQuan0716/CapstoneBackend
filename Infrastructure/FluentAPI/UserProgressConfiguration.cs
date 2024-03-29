@@ -13,7 +13,7 @@ namespace Infrastructure.FluentAPI
     {
         public void Configure(EntityTypeBuilder<UserProgress> builder)
         {
-          builder.HasKey(x => new {x.CourseId,x.AccountId});
+          builder.HasKey(x => new {x.LessonId,x.AccountId});
           builder.Ignore(x => x.Id);
         }
     }

@@ -14,8 +14,8 @@ namespace MonochordCapstoneProjectAPI
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IClaimService, ClaimService>();
-            services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ILessonService, LessonService>();
+            services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<IFileService, FileService>();    
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IQuizService, QuizService>();    

@@ -22,7 +22,7 @@ namespace Infrastructure.Mappers
         public MapperProfileConfiguration() 
         { 
             CreateAccountMap();
-            CreateCourseMap();
+            CreateUnitMap();
             CreateLessonMap();
             CreateChoiceMap();
             CreateQuestionMap();
@@ -35,13 +35,13 @@ namespace Infrastructure.Mappers
             CreateMap<AccountViewModel, Account>().ReverseMap();
             CreateMap<UpdatePasswordDTO, Account>().ForMember(rp => rp.PasswordHash, opt => opt.MapFrom(src => src.NewPassword)).ReverseMap();
         }
-        internal void CreateCourseMap()
+        internal void CreateUnitMap()
         {
-            CreateMap<CourseDetailViewModel, Course>().ReverseMap();
+            CreateMap<UnitViewModel, Unit>().ReverseMap();
         }
         internal void CreateLessonMap()
         {
-            CreateMap<LessonViewModel, Lesson>().ReverseMap();
+            CreateMap<LessonDetailViewModel, Lesson>().ReverseMap();
         }
         internal void CreateQuestionMap()
         {

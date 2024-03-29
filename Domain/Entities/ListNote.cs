@@ -11,6 +11,6 @@ namespace Domain.Entities
         public string ListNoteName { get; set; }
         public bool ListNoteStatus { get; set; }
         public ICollection<ListNoteDetail> Detail { get; set; }
-        public ICollection<PraticeLesson> PraticeLessons { get; set; }
+        public ICollection<PraticeUnit> PraticeLessons { get; set; }
     }
 }

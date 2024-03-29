@@ -14,40 +14,40 @@ namespace Infrastructure
         private readonly AppDbContext _appDBContext;
         private readonly IAccountRepository _accountRepository;
         private readonly ISongRepository _songRepository;
-        private readonly ICourseRepository _courseRepository;
-        private readonly IQuizRepository _quizRepository;
         private readonly ILessonRepository _lessonRepository;
+        private readonly IQuizRepository _quizRepository;
+        private readonly IUnitRepository _unitRepository;
         private readonly IQuizDetailRepository _quizDetailRepository;
         private readonly IQuestionRepository _questionRepository;
         private readonly IChoiceRepository _choiceRepository;
         private readonly IQuestionDetailRepository _questionDetailRepository;
-        private readonly ITheoryLessonRepository _theoryLessonRepository;
+        private readonly ITheoryUnitRepository _theoryUnitRepository;
         public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, 
-            ISongRepository songRepository, ICourseRepository courseRepository, 
+            ISongRepository songRepository, ILessonRepository lessonRepository, 
             IQuizRepository quizRepository, IQuizDetailRepository quizDetailRepository, 
             IQuestionRepository questionRepository, IChoiceRepository choiceRepository,
-            IQuestionDetailRepository questionDetailRepository, ILessonRepository lessonRepository,
-            ITheoryLessonRepository theoryLessonRepository)
+            IQuestionDetailRepository questionDetailRepository, IUnitRepository unitRepository,
+            ITheoryUnitRepository theoryUnitRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
             _songRepository = songRepository;
-            _courseRepository = courseRepository;
+            _unitRepository = unitRepository;
             _lessonRepository = lessonRepository;
             _quizRepository = quizRepository;
             _quizDetailRepository = quizDetailRepository;
             _questionRepository = questionRepository;
             _choiceRepository = choiceRepository;
             _questionDetailRepository = questionDetailRepository;
-            _theoryLessonRepository = theoryLessonRepository;
+            _theoryUnitRepository = theoryUnitRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
 
         public ISongRepository SongRepository => _songRepository;
 
-        public ICourseRepository CourseRepository => _courseRepository;
         public ILessonRepository LessonRepository => _lessonRepository;
+        public IUnitRepository UnitRepository => _unitRepository;
 
         public IQuestionRepository QuestionRepository => _questionRepository;
 
@@ -59,7 +59,7 @@ namespace Infrastructure
 
         public IQuestionDetailRepository QuestionDetailRepository => _questionDetailRepository;
 
-        public ITheoryLessonRepository TheoryLessonRepository => _theoryLessonRepository;
+        public ITheoryUnitRepository TheoryUnitRepository => _theoryUnitRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }

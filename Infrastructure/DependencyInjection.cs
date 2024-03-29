@@ -25,14 +25,14 @@ namespace Infrastructure
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUnitOfWork,UnitOfWork>();   
             services.AddScoped<ISongRepository, SongRepository>();
-            services.AddScoped<ICourseRepository, CourseRepository>();  
-            services.AddScoped<ILessonRepository, LessonRepository>();
+            services.AddScoped<ILessonRepository, LessonRepository>();  
+            services.AddScoped<IUnitRepository, UnitRepository>();
             services.AddScoped<IChoiceRepository, ChoiceRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();  
             services.AddScoped<IQuizDetailRepository, QuizDetailRepository>();
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IQuestionDetailRepository, QuestionDetailRepository>();
-            services.AddScoped<ITheoryLessonRepository, TheoryLessonRepository>();
+            services.AddScoped<ITheoryUnitRepository, TheoryUnitRepository>();
             return services;
         }
     }

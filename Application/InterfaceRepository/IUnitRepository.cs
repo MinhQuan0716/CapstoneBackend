@@ -1,5 +1,5 @@
 ﻿using Application.ViewModel.CourseModel;
-using Application.ViewModel.TheoryLessonModel;
+using Application.ViewModel.LessonModel;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Application.InterfaceRepository
 {
-    public interface ITheoryLessonRepository : IGenericRepository<TheoryLesson>
+    public interface IUnitRepository : IGenericRepository<Unit>
     {
-        Task<IEnumerable<TheoryLessonModel>> GetAllTheoryLessonByLessonId(Guid lessonId);
+        Task<IEnumerable<UnitViewModel>> GetAllUnitByLessonIdAsync(Guid lessonId);
+        Task<Unit> GetUnitByName (string unitName); 
     }
 }

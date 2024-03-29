@@ -32,8 +32,8 @@ namespace Application.Services
         private readonly ICacheService _cacheService;
         private readonly IClaimService _claimService;
         private ISendMailHelper _sendMailHelper;
-        public AccountService(IUnitOfWork unitOfWork,AppConfiguration configuration
-            ,IMapper mapper,ICacheService cacheService,IClaimService claimService,ISendMailHelper sendMailHelper)
+        public AccountService(IUnitOfWork unitOfWork, AppConfiguration configuration
+            , IMapper mapper, ICacheService cacheService, IClaimService claimService, ISendMailHelper sendMailHelper)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
@@ -57,24 +57,24 @@ namespace Application.Services
             var accessToken = loginAccount.GenerateTokenString(_configuration!.JwtSecretKey, DateTime.Now);
             var expireRefreshTokenTime = DateTime.Now.AddHours(24);
             await _unitOfWork.SaveChangeAsync();
-            _cacheService.SetData( loginAccount.Id.ToString(), refreshToken, DateTime.Now.AddMinutes(30));
+            _cacheService.SetData(loginAccount.Id.ToString(), refreshToken, DateTime.Now.AddMinutes(30));
             return new Token
             {
-                Username=loginAccount.UserName,
+                Username = loginAccount.UserName,
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
-                RoleName=loginAccount.Role.RoleName
+                RoleName = loginAccount.Role.RoleName
             };
         }
 
         public async Task<bool> RegisterAsync(RegisterForm registerForm)
         {
-            var registerAccount =await _unitOfWork.AccountRepository.FindAccountByEmail(registerForm.Email);
+            var registerAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(registerForm.Email);
             if (registerAccount != null)
             {
                 throw new Exception("Email already exist");
             }
-            var newAcc= _mapper.Map<Account>(registerForm);
+            var newAcc = _mapper.Map<Account>(registerForm);
             newAcc.RoleId = 3;
             newAcc.PasswordHash = registerForm.Password.Hash();
             newAcc.IsDelete = false;
@@ -86,8 +86,8 @@ namespace Application.Services
         {
             var accountId = _claimService.GetCurrentUserId;
             var cacheData = _cacheService.GetData<string>(accountId.ToString());
-            var loginAccount = await _unitOfWork.AccountRepository.GetByIdAsync(accountId,x=>x.Role);
-            if (loginAccount == null||cacheData==null)
+            var loginAccount = await _unitOfWork.AccountRepository.GetByIdAsync(accountId, x => x.Role);
+            if (loginAccount == null || cacheData == null)
             {
                 return null;
             }
@@ -95,22 +95,22 @@ namespace Application.Services
             {
                 return null;
             }
-          var newAccessToken=loginAccount.GenerateTokenString(_configuration.JwtSecretKey,DateTime.Now);
+            var newAccessToken = loginAccount.GenerateTokenString(_configuration.JwtSecretKey, DateTime.Now);
             var newRefreshToken = RefreshToken.GetRefreshToken();
             _cacheService.RemoveData(refreshToken);
-            _cacheService.SetData(loginAccount.Id.ToString(), newRefreshToken,  DateTime.Now.AddMinutes(30));
+            _cacheService.SetData(loginAccount.Id.ToString(), newRefreshToken, DateTime.Now.AddMinutes(30));
             return new Token
             {
-                Username=loginAccount.UserName,
+                Username = loginAccount.UserName,
                 AccessToken = newAccessToken,
                 RefreshToken = newRefreshToken,
-                RoleName=loginAccount.Role.RoleName
+                RoleName = loginAccount.Role.RoleName
             };
         }
 
         public async Task<Respone> ResetPassword(ResetPasswordDTO resetPasswordDTO)
         {
-            string email= _cacheService.GetData<string>(resetPasswordDTO.Code);
+            string email = _cacheService.GetData<string>(resetPasswordDTO.Code);
 
             if (email != null)
             {
@@ -124,16 +124,16 @@ namespace Application.Services
                         _unitOfWork.AccountRepository.Update(user);
                         if (await _unitOfWork.SaveChangeAsync() > 0)
                         {
-                            return new Respone(HttpStatusCode.OK,"Reset successfully");
+                            return new Respone(HttpStatusCode.OK, "Reset successfully");
                         }
                     }
                 }
                 else
                 {
-                    return new Respone(HttpStatusCode.BadRequest,"Password and Confirm Passord do not match");
+                    return new Respone(HttpStatusCode.BadRequest, "Password and Confirm Passord do not match");
                 }
             }
-            return new Respone(HttpStatusCode.BadRequest,"Invalide code");
+            return new Respone(HttpStatusCode.BadRequest, "Invalide code");
         }
 
         public async Task<Respone> SendConfirmMailCode(string email)
@@ -158,16 +158,17 @@ namespace Application.Services
                 //Replace [emailaddress] = email
                 MailText = MailText.Replace("[emailaddress]", email);
                 var result = await _sendMailHelper.SendMailAsync(email, "ResetPassword", MailText);
-                if (!result) 
+                if (!result)
                 {
                     return new Respone(HttpStatusCode.BadRequest, "Cannot send mail");
-                } ;
+                };
 
-                _cacheService.SetData(key,email,DateTimeOffset.Now.AddMinutes(10));
-            } catch(Exception ex) 
-                {
-                 return new Respone(HttpStatusCode.InternalServerError, ex.Message);
-                }
+                _cacheService.SetData(key, email, DateTimeOffset.Now.AddMinutes(10));
+            }
+            catch (Exception ex)
+            {
+                return new Respone(HttpStatusCode.InternalServerError, ex.Message);
+            }
             return new Respone(HttpStatusCode.OK, "Send successfully");
         }
 
@@ -184,7 +185,7 @@ namespace Application.Services
         public async Task<Respone> GetCurrentLoginUser()
         {
             var user = await _unitOfWork.AccountRepository.GetByIdAsync(_claimService.GetCurrentUserId);
-            if(user == null)
+            if (user == null)
             {
                 return new Respone(HttpStatusCode.BadRequest, "Get failed");
             }
@@ -197,10 +198,10 @@ namespace Application.Services
             {
                 var payload = await GoogleJsonWebSignature.ValidateAsync(token);
                 string userId = payload.Subject;
-                string email = payload.Email; 
+                string email = payload.Email;
                 string firstName = payload.GivenName;
                 string lastName = payload.FamilyName;
-                string pictureUrl = payload.Picture; 
+                string pictureUrl = payload.Picture;
                 Account loginAccount = await _unitOfWork.AccountRepository.FindAccountByEmail(email);
                 if (loginAccount == null)
                 {
@@ -246,6 +247,7 @@ namespace Application.Services
             if (user != null)
             {
                 _mapper.Map(accountViewModel, user, typeof(AccountViewModel), typeof(Account));
+                (user.FirstName, user.LastName) = StringUtil.SplitName(accountViewModel.Fullname);
                 _unitOfWork.AccountRepository.Update(user);
                 var result = await _unitOfWork.SaveChangeAsync();
                 if (result > 0)

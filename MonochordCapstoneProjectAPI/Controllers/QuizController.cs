@@ -16,11 +16,11 @@ namespace MonochordCapstoneProjectAPI.Controllers
             _quizService = quizService;
         }
         /// <summary>
-        /// Get quiz by lesson Id with pagination
+        /// Get quiz by unit Id with pagination
         /// </summary>
-        /// <param name="id">The lesson id {Guid id}</param>
-        /// <param name="pageIndex">The zero-based page index for the pagination </param>
-        /// <param name="pageSize">The number of items per page for the pagination (default is 10).</param>
+        /// <param name="id">The unit id </param>
+        /// <param name="pageIndex">The zero-based page index for the pagination. </param>
+        /// <param name="pageSize">The number of items per page for the pagination.</param>
         /// <returns></returns>
         [SwaggerResponse((int)HttpStatusCode.OK,"Get quiz by lesson id with pagination",typeof(Respone))]
         [HttpGet("{id}")]

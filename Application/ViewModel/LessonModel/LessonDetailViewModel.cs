@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModel.CourseModel
 {
-    public class CourseViewModel
+    public class LessonDetailViewModel
     {
-        public string CourseName { get; set; }
-        public string CourseDescription { get; set; }
+        public string LessonName { get; set; }
+        public string LessonDescription { get; set; }
         public DateTime Duration { get; set; }
-        public int numberLesson { get; set; }
-        public decimal progress { get; set; }
     }
 }

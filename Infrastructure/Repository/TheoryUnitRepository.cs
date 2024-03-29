@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class TheoryLessonRepository : GenericRepository<TheoryLesson>, ITheoryLessonRepository
+    public class TheoryUnitRepository : GenericRepository<TheoryUnit>, ITheoryUnitRepository
     {
         private readonly AppDbContext _appDbContext;
-        public TheoryLessonRepository(AppDbContext appDbContext, IClaimService claimService) : base(appDbContext, claimService)
+        public TheoryUnitRepository(AppDbContext appDbContext, IClaimService claimService) : base(appDbContext, claimService)
         {
             _appDbContext = appDbContext;
         }
 
-        public async Task<IEnumerable<TheoryLessonModel>> GetAllTheoryLessonByLessonId(Guid lessonId)
+        public async Task<IEnumerable<TheoryLessonModel>> GetAllTheoryUnitByUnitId(Guid unitId)
         {
-            return await _appDbContext.TheoryLessons
-                .Where(theoryLesson => theoryLesson.LessonId == lessonId)
+            return await _appDbContext.TheoryUnits
+                .Where(theoryUnit => theoryUnit.UnitId == unitId)
                 .Select(x => new TheoryLessonModel
                 {
                     Title = x.Title,
