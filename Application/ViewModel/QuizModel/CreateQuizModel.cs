@@ -12,7 +12,7 @@ namespace Application.ViewModel.QuizModel
         public string Title { get; set; }
         public string Description { get; set; }
         public bool QuizStatus { get; set; }
-        public Guid LessonId { get; set; }
+        public Guid UnitId { get; set; }
         public List<Guid> ListQuestionId { get; set; }    
     }
 }
