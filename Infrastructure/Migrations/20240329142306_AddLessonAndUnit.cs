@@ -100,12 +100,6 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsPremium",
-                table: "Accounts",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
 
             migrationBuilder.CreateTable(
                 name: "Units",
