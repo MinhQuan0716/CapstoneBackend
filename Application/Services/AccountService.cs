@@ -21,6 +21,7 @@ using Google.Apis.Auth;
 using Application.ViewModel.AccountModel;
 using System.Reflection;
 using Application.ViewModel.UpdatePasswordModel;
+using System.Globalization;
 
 namespace Application.Services
 {
@@ -74,7 +75,13 @@ namespace Application.Services
             {
                 throw new Exception("Email already exist");
             }
+            DateTime birthDay;
+            if (!DateTime.TryParseExact(registerForm.BirthDay, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthDay))
+            {
+                throw new Exception("Invalid Birthday format. Please use 'yyyy-MM-dd' format.");
+            }
             var newAcc = _mapper.Map<Account>(registerForm);
+            newAcc.BirthDay = birthDay; 
             newAcc.RoleId = 3;
             newAcc.PasswordHash = registerForm.Password.Hash();
             newAcc.IsDelete = false;
@@ -248,6 +255,12 @@ namespace Application.Services
             {
                 _mapper.Map(accountViewModel, user, typeof(AccountViewModel), typeof(Account));
                 (user.FirstName, user.LastName) = StringUtil.SplitName(accountViewModel.Fullname);
+                DateTime birthDay;
+                if (!DateTime.TryParseExact(accountViewModel.BirthDay, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthDay))
+                {
+                    throw new Exception("Invalid Birthday format. Please use 'yyyy-MM-dd' format.");
+                }
+                user.BirthDay=birthDay;
                 _unitOfWork.AccountRepository.Update(user);
                 var result = await _unitOfWork.SaveChangeAsync();
                 if (result > 0)
