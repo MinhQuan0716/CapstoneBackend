@@ -209,13 +209,13 @@ namespace Infrastructure.Migrations
                 table: "Units",
                 column: "LessonId");
 
-            migrationBuilder.AddForeignKey(
+            /*migrationBuilder.AddForeignKey(
                 name: "FK_Quizzes_Units_UnitId",
                 table: "Quizzes",
                 column: "UnitId",
                 principalTable: "Units",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade);*/
 
             migrationBuilder.AddForeignKey(
                 name: "FK_UserProgresses_Lessons_LessonId",
