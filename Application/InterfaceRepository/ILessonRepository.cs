@@ -10,6 +10,6 @@ namespace Application.InterfaceRepository
 {
     public interface ILessonRepository:IGenericRepository<Lesson>
     {
-        Task<IEnumerable<LessonViewModel>> GetAllLessonByUserIdAsync(Guid userId);
+        Task<IEnumerable<LessonDetailViewModel>> GetAllLessonByUserIdAsync(Guid accountId);
     }
 }

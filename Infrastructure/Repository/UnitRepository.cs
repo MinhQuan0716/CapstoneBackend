@@ -28,7 +28,7 @@ namespace Infrastructure.Repository
         {
             UnitName = unit.UnitName,
             UnitDuration =unit.UnitDuration,
-            UnitType=GetLessonType(unit)
+            UnitType=GetUnitType(unit)
         })
         .ToListAsync();
         }
@@ -38,7 +38,7 @@ namespace Infrastructure.Repository
             return await _appDbContext.Units.FirstOrDefaultAsync(x => x.UnitName == lessonName);
         }
 
-        private string GetLessonType(Unit unit)
+        private string GetUnitType(Unit unit)
         {
             if (unit.Videos.Any())
             {
