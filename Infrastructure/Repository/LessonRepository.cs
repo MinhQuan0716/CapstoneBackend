@@ -42,6 +42,7 @@ namespace Infrastructure.Repository
         public async Task<IEnumerable<LessonDetailViewModel>> GetAllLessonByUserIdAsync(Guid accountId)
         {
             var lessons = await _appDbContext.Lessons
+                .OrderBy(l=>l.LessonOrder)
                 .ToListAsync();
             var userProgress = await _appDbContext.UserProgresses
                 .Where(up => up.AccountId == accountId)
