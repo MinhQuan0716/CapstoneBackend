@@ -24,7 +24,7 @@ namespace MonochordCapstoneProjectAPI.Controllers
         /// <returns></returns>
         [SwaggerResponse((int)HttpStatusCode.OK,"Get quiz by lesson id with pagination",typeof(Respone))]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuizByLessonId(Guid id,[FromQuery] int pageIndex,[FromQuery] int pageSize)
+        public async Task<IActionResult> GetQuizByUnitId(Guid id,[FromQuery] int pageIndex,[FromQuery] int pageSize)
         {
             Respone getRespone = await _quizService.GetQuizAsync(id,pageIndex,pageSize);
             return Ok(getRespone);

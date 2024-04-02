@@ -13,10 +13,6 @@ namespace Application.InterfaceRepository
     public interface IQuizRepository:IGenericRepository<Quiz>
     {
         Task<Guid> GetLastSaveQuizId();
-        /*Task<List<QuizViewModel>> GetQuizByUnitId(Guid unitId);*/
-        IQueryable<Quiz> GetQuizQueryableForPagination();
-        Expression<Func<Quiz, bool>> GetExpression(Guid unitId);
-        Task<Pagination<QuizViewModel>> GetPaginationQuiz(Guid unitId, int pageIndex, int pageSize);
-        /*Task<Pagination<QuizViewModel>> GetQuizPaginatedByLessonId(Guid lessonId);*/
+       Task<QuizViewModel> GetQuizByUnitIdAsync(Guid unitId);
     }
 }
