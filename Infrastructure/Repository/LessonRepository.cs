@@ -50,6 +50,7 @@ namespace Infrastructure.Repository
             var lessonCount = lessons.Count();
             var lessonDetailViewModel = lessons.Select(lesson => new LessonDetailViewModel
             {
+                Id = lesson.Id,
                 LessonName = lesson.LessonName,
                 LessonDescription = lesson.LessonDescription,
                 IsPremium = lesson.IsPremium,
