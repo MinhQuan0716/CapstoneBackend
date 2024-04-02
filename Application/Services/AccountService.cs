@@ -215,7 +215,7 @@ namespace Application.Services
                     newAcc.Email = email;
                     newAcc.RoleId = 3;
                     newAcc.IsDelete = false;
-                    newAcc.UserName = firstName + lastName;
+                    newAcc.UserName = firstName + " " + lastName;
                     newAcc.FirstName = firstName;
                     newAcc.LastName = lastName;
                     newAcc.ImageUrl = pictureUrl;
