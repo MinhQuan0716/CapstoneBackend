@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.ViewModel.ChoiceModel;
+using Application.ViewModel.QuestionModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,8 @@ namespace Application.ViewModel.QuizModel
     /// </summary>
     public class QuizViewModel
     {
-        public List<string> QuestionTextList { get; set; }
-        public List<string> ChoiceList { get; set; }    
+        public List<QuestionViewModelForQuiz> QuestionTextList { get; set; }
+        public List<ChoiceViewModelForQuiz> ChoiceList { get; set; }
+     /*   public List<QuestionWithChoiceViewModel> Questions { get; set; }*/
     }
 }

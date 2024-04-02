@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using System.Net;
 using Application.Common;
 using Application.InterfaceRepository;
+using Application.Util;
+using Application.ViewModel.QuestionModel;
+using Application.ViewModel.ChoiceModel;
+using System.Runtime.CompilerServices;
 namespace Application.Services
 {
     public class QuizService : IQuizService
@@ -78,23 +82,51 @@ namespace Application.Services
             return new Respone(HttpStatusCode.InternalServerError, "Delete faild", null);
         }
 
-        public async Task<Respone> GetQuizAsync(Guid lessonId, int pageIndex, int pageSize)
+        public async Task<Respone> GetQuizAsync(Guid unitId, int pageIndex, int pageSize)
         {
-          Pagination<QuizViewModel> quizList = new Pagination<QuizViewModel>();
-            try
+           
+         QuizViewModel quizViewModels = await _unitOfWork.QuizRepository.GetQuizByUnitIdAsync(unitId);
+            List<QuestionWithChoiceViewModel> combineData = new List<QuestionWithChoiceViewModel>();
+            List<Choice> choiceList = new List<Choice>();
+            List<Choice> distinctChoices = new List<Choice>();
+            int totalItemCount = 0;
+            foreach(var question in quizViewModels.QuestionTextList)
             {
-                 quizList = await _unitOfWork.QuizRepository.GetPaginationQuiz(lessonId,pageIndex,pageSize);
-                if (quizList==null)
+                List<Guid> listChoiceIdRelatedToQuestion = await _unitOfWork.QuestionDetailRepository.GetAllChoiceInQuestionDetail(question.QuestionId);
+                choiceList.Clear();
+
+                // Fetch actual choices using the retrieved Guids
+                foreach(var choiceId in listChoiceIdRelatedToQuestion)
                 {
-                    return new Respone(HttpStatusCode.BadGateway, "Fetch error", null);
+                    var choice = await _unitOfWork.ChoiceRepository.GetByIdAsync(choiceId);
+                    Console.WriteLine($"Fetched Choice ID: {choice.Id}");
+                    choiceList.Add(choice);
+                   
                 }
-            } catch (Exception ex)
+                var questionWithChoice = new QuestionWithChoiceViewModel
+                {
+                    QuestionId = question.QuestionId,
+                    QuestionText = question.QuestionText,
+                    ListChoices=new List<ChoiceViewModelForQuiz>()
+                };
+                questionWithChoice.ListChoices.AddRange(choiceList.Select(x => new ChoiceViewModelForQuiz
+                {
+                    ChoiceId = x.Id,
+                    ChoiceText = x.ChoiceText
+                }));
+                combineData.Add(questionWithChoice);
+            };
+            
+            Pagination<QuestionWithChoiceViewModel> pagination=PaginationUtil<QuestionWithChoiceViewModel>.ToPagination(combineData, pageIndex, pageSize);
+            if (pagination.Items.Any())
             {
-                return new Respone(HttpStatusCode.InternalServerError, ex.Message, null);
+                return new Respone(HttpStatusCode.OK, "fetch ok", pagination);
             }
-            return new Respone(HttpStatusCode.OK, "Fetch success", quizList);
+            return new Respone(HttpStatusCode.BadRequest, "fetch error");
+        }
+
         }
     }
-    }
+
 
 

@@ -1,6 +1,8 @@
 ﻿using Application.Common;
 using Application.InterfaceRepository;
 using Application.InterfaceService;
+using Application.ViewModel.ChoiceModel;
+using Application.ViewModel.QuestionModel;
 using Application.ViewModel.QuizModel;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -20,62 +22,56 @@ namespace Infrastructure.Repository
         {
             _appDbContext = appDbContext;
         }
-
-
         public async Task<Guid> GetLastSaveQuizId()
         {
             Quiz lastSaveQuiz = await _appDbContext.Quizzes.OrderBy(x => x.CreationDate).LastOrDefaultAsync();
             return lastSaveQuiz.Id;
         }
-
-       /* public async Task<List<QuizViewModel>> GetQuizByLessonId(Guid unitId)
+        public async Task<QuizViewModel> GetQuizByUnitIdAsync(Guid unitId)
         {
-            return  await _appDbContext.Quizzes.Include(x => x.Questions)
-                                             .ThenInclude(y => y.Question)
-                                              .ThenInclude(z => z.Choices)
-                                              .Where(x => x.UnitId == unitId)
-                                              .Select(x => new QuizViewModel
-                                              {
-                                                  QuestionTextList=x.Questions.Select(y=>y.Question.QuestionText).ToList(),
-                                                  ChoiceList=x.Questions.SelectMany(y=>y.Question.Choices.Select(z=>z.Choice.ChoiceText)).ToList(),
-                                              }).AsQueryable().ToListAsync();
-        }*/
-
-        public IQueryable<Quiz> GetQuizQueryableForPagination()
-        {
-            var query = _appDbContext.Quizzes.Include(x => x.Questions)
-                                             .ThenInclude(y => y.Question)
-                                              .ThenInclude(z => z.Choices)
-                                              .ThenInclude(v=>v.Choice)
-                                              .AsQueryable();
-            return query;
-        }
-        public Expression<Func<Quiz, bool>> GetExpression(Guid unitId)
-        {
-            return quiz => quiz.UnitId == unitId;
-        }
-        public async Task<Pagination<QuizViewModel>> GetPaginationQuiz(Guid unitId,int pageIndex,int pageSize)
-        {
-            var expression= GetExpression(unitId);
-            var queryable = GetQuizQueryableForPagination();
-            var quizPagination = await ToPagination(queryable,expression,pageIndex,pageSize);
-            var listQuizViewModel= new List<QuizViewModel>();
-            foreach(var item in quizPagination.Items)
-            {   
-                QuizViewModel quizViewModel = new QuizViewModel
-                {
-                    ChoiceList = item.Questions?.SelectMany(y => y.Question?.Choices?.Select(z => z.Choice?.ChoiceText) ?? new List<string>()).ToList() ?? new List<string>(),
-                    QuestionTextList = item.Questions.Select(y => y.Question.QuestionText).ToList()
-                };
-                listQuizViewModel.Add(quizViewModel);
-            }
-            return new  Pagination<QuizViewModel>()
+            var listQuizViewModel = new List<QuizViewModel>();
+            var listChoiceViewModel = new List<ChoiceViewModelForQuiz>();
+            var listQuestionViewModel = new List<QuestionViewModelForQuiz>();
+            ChoiceViewModelForQuiz choiceList = new ChoiceViewModelForQuiz();
+            QuestionViewModelForQuiz questionList = new QuestionViewModelForQuiz();
+            QuizViewModel quizViewModel = new QuizViewModel();
+            var query = await _appDbContext.Quizzes.Include(x => x.Questions)
+                                            .ThenInclude(y => y.Question)
+                                             .ThenInclude(z => z.Choices)
+                                             .ThenInclude(v => v.Choice)
+                                             .Where(x => x.UnitId == unitId)
+                                             .ToListAsync();
+            foreach (var quiz in query)
             {
-                Items = listQuizViewModel,
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                TotalItemsCount=quizPagination.TotalItemsCount
-            };
+                var listChoice = quiz.Questions.SelectMany(quizdetail => quizdetail.Question.Choices).Select(question => question.Choice);
+                foreach (var choice in listChoice)
+                {
+                    choiceList = new ChoiceViewModelForQuiz
+                    {
+                        ChoiceId = choice.Id,
+                        ChoiceText = choice.ChoiceText,
+                    };
+                    listChoiceViewModel.Add(choiceList);
+                }
+                var listQuestion = quiz.Questions.Select(quizdetail => quizdetail.Question);
+                foreach (var question in listQuestion)
+                {
+                    questionList = new QuestionViewModelForQuiz
+                    {
+                        QuestionId = question.Id,
+                        QuestionText = question.QuestionText,
+                    };
+                    listQuestionViewModel.Add(questionList);
+                }
+                quizViewModel = new QuizViewModel
+                {
+                    ChoiceList = listChoiceViewModel,
+                    QuestionTextList = listQuestionViewModel
+                };
+
+            }
+            return quizViewModel;
+
         }
     }
 }
