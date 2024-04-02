@@ -10,6 +10,7 @@ namespace Application.ViewModel.CourseModel
 {
     public class LessonDetailViewModel
     {
+        public Guid Id { get; set; }
         public string LessonName { get; set; }
         public string LessonDescription { get; set; }
         public bool IsPremium { get; set; }
