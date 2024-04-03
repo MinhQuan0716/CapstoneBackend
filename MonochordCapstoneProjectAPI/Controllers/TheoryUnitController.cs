@@ -31,9 +31,9 @@ namespace MonochordCapstoneProjectAPI.Controllers
         /// <returns></returns>
         [SwaggerResponse((int)HttpStatusCode.OK, "Get all theory by unit id", typeof(Respone))]
         [HttpGet("{id}")]
-        public async Task<Respone> GetAllTheoryUnitById(Guid unitId)
+        public async Task<Respone> GetAllTheoryUnitById(Guid id)
         {
-            var respone = await _theoryUnitService.GetAllTheoryUnitByUnitId(unitId);
+            var respone = await _theoryUnitService.GetAllTheoryUnitByUnitId(id);
             return respone;
         }
     }

@@ -20,6 +20,8 @@ namespace MonochordCapstoneProjectAPI
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IQuizService, QuizService>();    
             services.AddScoped<ISendMailHelper,SendMailHelper>();
+            services.AddScoped<ITheoryUnitService, TheoryUnitService>();
+            services.AddScoped<IPracticeUnitService, PracticeUnitService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

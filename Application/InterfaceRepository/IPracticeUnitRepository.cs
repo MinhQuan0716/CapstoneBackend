@@ -1,4 +1,4 @@
-﻿using Application.ViewModel.CourseModel;
+﻿using Application.ViewModel.PracticeUnitModel;
 using Application.ViewModel.TheoryLessonModel;
 using Domain.Entities;
 using System;
@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Application.InterfaceRepository
 {
-    public interface ITheoryUnitRepository : IGenericRepository<TheoryUnit>
+    public interface IPracticeUnitRepository : IGenericRepository<PraticeUnit>
     {
-        Task<IEnumerable<TheoryUnitModel>> GetAllTheoryUnitByUnitId(Guid unitId);
+        Task<IEnumerable<PracticeUnitModel>> GetAllPracticeUnitByUnitId(Guid unitId);
     }
 }

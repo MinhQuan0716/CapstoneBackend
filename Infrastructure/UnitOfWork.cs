@@ -22,12 +22,13 @@ namespace Infrastructure
         private readonly IChoiceRepository _choiceRepository;
         private readonly IQuestionDetailRepository _questionDetailRepository;
         private readonly ITheoryUnitRepository _theoryUnitRepository;
+        private readonly IPracticeUnitRepository _practiceUnitRepository;
         public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, 
             ISongRepository songRepository, ILessonRepository lessonRepository, 
             IQuizRepository quizRepository, IQuizDetailRepository quizDetailRepository, 
             IQuestionRepository questionRepository, IChoiceRepository choiceRepository,
             IQuestionDetailRepository questionDetailRepository, IUnitRepository unitRepository,
-            ITheoryUnitRepository theoryUnitRepository)
+            ITheoryUnitRepository theoryUnitRepository, IPracticeUnitRepository practiceUnitRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
@@ -40,6 +41,7 @@ namespace Infrastructure
             _choiceRepository = choiceRepository;
             _questionDetailRepository = questionDetailRepository;
             _theoryUnitRepository = theoryUnitRepository;
+            _practiceUnitRepository = practiceUnitRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
@@ -60,6 +62,8 @@ namespace Infrastructure
         public IQuestionDetailRepository QuestionDetailRepository => _questionDetailRepository;
 
         public ITheoryUnitRepository TheoryUnitRepository => _theoryUnitRepository;
+
+        public IPracticeUnitRepository PracticeUnitRepository => _practiceUnitRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }

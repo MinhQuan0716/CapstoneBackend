@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.InterfaceService
 {
-    public interface ITheoryUnitService
+    public interface IPracticeUnitService
     {
-        Task<Respone> GetAllTheoryUnit();
-        Task<Respone> GetAllTheoryUnitByUnitId(Guid unitId);
+        Task<Respone> GetAllPracticeUnit();
+        Task<Respone> GetAllPracticeUnitByUnitId(Guid unitId);
     }
 }
