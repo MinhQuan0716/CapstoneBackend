@@ -1,6 +1,7 @@
 ﻿using Application.InterfaceService;
 using Application.ViewModel.QuizModel;
 using Application.ViewModel.ResponeModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -28,6 +29,13 @@ namespace MonochordCapstoneProjectAPI.Controllers
         {
             Respone getRespone = await _quizService.GetQuizAsync(id,pageIndex,pageSize);
             return Ok(getRespone);
+        }
+        [HttpPost("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DoingQuiz(Guid id,List<DoingQuizViewModel> listAnswers)
+        {
+            Respone doingQuizResponse= await _quizService.DoingQuizAsync(id,listAnswers);
+            return Ok(doingQuizResponse);
         }
     }
 }

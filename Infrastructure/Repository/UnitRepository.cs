@@ -24,6 +24,9 @@ namespace Infrastructure.Repository
         {
             return await _appDbContext.Units
         .Where(unit => unit.LessonId == courseId)
+        .Include(unit => unit.PraticeUnits)
+        .Include(unit => unit.TheoryUnits)
+        .Include(unit => unit.Videos)
         .Select(unit => new UnitViewModel
         {
             UnitName = unit.UnitName,

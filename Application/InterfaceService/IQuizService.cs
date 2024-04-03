@@ -14,5 +14,6 @@ namespace Application.InterfaceService
         Task<Respone> CreateQuizAsync(CreateQuizModel createQuizModel);
         Task<Respone> DeleteQuizAsync(Guid quizId);
         Task<Respone> GetQuizAsync(Guid unitId,int pageIndex,int pageSize);
+        Task<Respone> DoingQuizAsync(Guid quizId, List<DoingQuizViewModel> listAnswers);
     }
 }

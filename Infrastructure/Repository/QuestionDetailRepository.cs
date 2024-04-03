@@ -1,5 +1,6 @@
 ﻿using Application.InterfaceRepository;
 using Application.InterfaceService;
+using Application.ViewModel.QuizModel;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +17,20 @@ namespace Infrastructure.Repository
         public QuestionDetailRepository(AppDbContext appDbContext, IClaimService claimService) : base(appDbContext, claimService)
         {
             _appDbContext = appDbContext;
+        }
+
+        public async Task<int> CalculationPoint(List<DoingQuizViewModel> listDoingQuizViewModels)
+        {
+            int count = 0;
+            foreach(var doingQuizModel in listDoingQuizViewModels)
+            {
+                QuestionDetail questionDetail = await GetQuestionDetail(doingQuizModel.QuestionId, doingQuizModel.ChoiceId);
+                if (questionDetail.IsCorrect)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         public async Task<List<Guid>> GetAllChoiceInQuestionDetail(Guid questionId)

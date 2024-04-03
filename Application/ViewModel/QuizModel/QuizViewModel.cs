@@ -14,8 +14,8 @@ namespace Application.ViewModel.QuizModel
     /// </summary>
     public class QuizViewModel
     {
+        public Guid QuizId { get; set; }
         public List<QuestionViewModelForQuiz> QuestionTextList { get; set; }
         public List<ChoiceViewModelForQuiz> ChoiceList { get; set; }
-     /*   public List<QuestionWithChoiceViewModel> Questions { get; set; }*/
     }
 }
