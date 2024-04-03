@@ -23,12 +23,13 @@ namespace Infrastructure
         private readonly IQuestionDetailRepository _questionDetailRepository;
         private readonly ITheoryUnitRepository _theoryUnitRepository;
         private readonly IUserQuizAttemptRepository _userQuizAttemptRepository;
+        private readonly IPracticeUnitRepository _practiceUnitRepository;
         public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, 
             ISongRepository songRepository, ILessonRepository lessonRepository, 
             IQuizRepository quizRepository, IQuizDetailRepository quizDetailRepository, 
             IQuestionRepository questionRepository, IChoiceRepository choiceRepository,
             IQuestionDetailRepository questionDetailRepository, IUnitRepository unitRepository,
-            ITheoryUnitRepository theoryUnitRepository,IUserQuizAttemptRepository userQuizAttemptRepository)
+            ITheoryUnitRepository theoryUnitRepository,IUserQuizAttemptRepository userQuizAttemptRepository, IPracticeUnitRepository practiceUnitRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
@@ -42,6 +43,7 @@ namespace Infrastructure
             _questionDetailRepository = questionDetailRepository;
             _theoryUnitRepository = theoryUnitRepository;
             _userQuizAttemptRepository=userQuizAttemptRepository;
+            _practiceUnitRepository = practiceUnitRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
@@ -64,6 +66,7 @@ namespace Infrastructure
         public ITheoryUnitRepository TheoryUnitRepository => _theoryUnitRepository;
 
         public IUserQuizAttemptRepository UserQuizAttemptRepository => _userQuizAttemptRepository;
+        public IPracticeUnitRepository PracticeUnitRepository => _practiceUnitRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModel.TheoryLessonModel
 {
-    public class TheoryLessonModel
+    public class TheoryUnitModel
     {
         public string Content { get; set; }
         public string Title { get; set; }

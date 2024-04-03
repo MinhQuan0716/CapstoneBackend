@@ -20,11 +20,11 @@ namespace Infrastructure.Repository
             _appDbContext = appDbContext;
         }
 
-        public async Task<IEnumerable<TheoryLessonModel>> GetAllTheoryUnitByUnitId(Guid unitId)
+        public async Task<IEnumerable<TheoryUnitModel>> GetAllTheoryUnitByUnitId(Guid unitId)
         {
             return await _appDbContext.TheoryUnits
                 .Where(theoryUnit => theoryUnit.UnitId == unitId)
-                .Select(x => new TheoryLessonModel
+                .Select(x => new TheoryUnitModel
                 {
                     Title = x.Title,
                     Content = x.Content

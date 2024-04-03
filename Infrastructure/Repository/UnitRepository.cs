@@ -20,20 +20,26 @@ namespace Infrastructure.Repository
             _appDbContext = appDbContext;
         }
 
-        public async Task<IEnumerable<UnitViewModel>> GetAllUnitByLessonIdAsync(Guid courseId)
+        public async Task<IEnumerable<UnitViewModel>> GetAllUnitByLessonIdAsync(Guid lessonId)
         {
-            return await _appDbContext.Units
-        .Where(unit => unit.LessonId == courseId)
-        .Include(unit => unit.PraticeUnits)
-        .Include(unit => unit.TheoryUnits)
-        .Include(unit => unit.Videos)
-        .Select(unit => new UnitViewModel
-        {
-            UnitName = unit.UnitName,
-            UnitDuration =unit.UnitDuration,
-            UnitType=GetUnitType(unit)
-        })
-        .ToListAsync();
+
+            var units = await _appDbContext.Units
+                .Include(unit => unit.PraticeUnits)
+                .Include(unit => unit.TheoryUnits)
+                .Include(unit => unit.Videos)
+                .Where(unit => unit.LessonId == lessonId)
+                .OrderBy(unit => unit.UnitOrder)
+        .       ToListAsync();
+
+            var unitViewModels = units.Select(unit => new UnitViewModel
+            {
+                UnitName = unit.UnitName,
+                UnitDuration = unit.UnitDuration,
+                UnitType = GetUnitType(unit)
+            })
+                .ToList(); // Materialize the projection into a list.
+
+            return unitViewModels;
         }
 
         public async Task<Unit> GetUnitByName(string lessonName)
@@ -43,15 +49,15 @@ namespace Infrastructure.Repository
 
         private string GetUnitType(Unit unit)
         {
-            if (unit.Videos.Any())
+            if (unit.Videos != null && unit.Videos.Any())
             {
                 return "Video Unit";
             }
-            else if (unit.Quizzes.Any())
+            else if (unit.Quizzes != null && unit.Quizzes.Any())
             {
                 return "Quiz Unit";
             }
-            else if (unit.TheoryUnits.Any())
+            else if (unit.TheoryUnits != null && unit.TheoryUnits.Any())
             {
                 return "Theory Unit";
             }

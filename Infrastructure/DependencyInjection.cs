@@ -34,6 +34,7 @@ namespace Infrastructure
             services.AddScoped<IQuestionDetailRepository, QuestionDetailRepository>();
             services.AddScoped<IUserQuizAttemptRepository, UserQuizAttemptRepository>();
             services.AddScoped<ITheoryUnitRepository, TheoryUnitRepository>();
+            services.AddScoped<IPracticeUnitRepository, PracticeUnitRepository>();
             return services;
         }
     }
