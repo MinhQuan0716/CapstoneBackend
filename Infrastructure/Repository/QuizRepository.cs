@@ -65,6 +65,7 @@ namespace Infrastructure.Repository
                 }
                 quizViewModel = new QuizViewModel
                 {
+                    QuizId=quiz.Id,
                     ChoiceList = listChoiceViewModel,
                     QuestionTextList = listQuestionViewModel
                 };

@@ -9,6 +9,7 @@ namespace Application.ViewModel.QuestionModel
 {
     public class QuestionWithChoiceViewModel
     {
+        public Guid QuizId { get; set; }
         public Guid QuestionId { get; set; }
         public string QuestionText { get; set; }
         public List<ChoiceViewModelForQuiz> ListChoices { get; set; }

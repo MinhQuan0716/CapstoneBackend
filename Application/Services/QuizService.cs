@@ -21,10 +21,12 @@ namespace Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public QuizService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IClaimService _claimService;
+        public QuizService(IUnitOfWork unitOfWork, IMapper mapper, IClaimService claimService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _claimService = claimService;
         }
 
         public async Task<Respone> CreateQuizAsync(CreateQuizModel createQuizModel)
@@ -82,6 +84,24 @@ namespace Application.Services
             return new Respone(HttpStatusCode.InternalServerError, "Delete faild", null);
         }
 
+        public async Task<Respone> DoingQuizAsync(Guid quizId, List<DoingQuizViewModel> listAnswers)
+        {
+            int score = await _unitOfWork.QuestionDetailRepository.CalculationPoint(listAnswers);
+            UserQuizAttempt userQuizAttempt = new UserQuizAttempt
+            {
+                AccountId=_claimService.GetCurrentUserId,
+                QuizId=quizId,
+                Score=score,
+                AttemptDate=DateTime.UtcNow,
+            };
+            await _unitOfWork.UserQuizAttemptRepository.AddAsync(userQuizAttempt);
+            if(await _unitOfWork.SaveChangeAsync() > 0)
+            {
+                return new Respone(HttpStatusCode.OK, "Attempt success", userQuizAttempt);
+            }
+            return new Respone(HttpStatusCode.BadRequest, "Error");
+        }
+
         public async Task<Respone> GetQuizAsync(Guid unitId, int pageIndex, int pageSize)
         {
            
@@ -105,6 +125,7 @@ namespace Application.Services
                 }
                 var questionWithChoice = new QuestionWithChoiceViewModel
                 {
+                    QuizId=quizViewModels.QuizId,
                     QuestionId = question.QuestionId,
                     QuestionText = question.QuestionText,
                     ListChoices=new List<ChoiceViewModelForQuiz>()

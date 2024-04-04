@@ -38,7 +38,7 @@ namespace Infrastructure.Repository
                 {
                     NoteId = d.Note.NoteId,
                     NoteName = d.Note.NoteName,
-                    Duration = d.Note.NoteType,
+                    Duration = d.Note.Duration,
                     Position = d.Position,
                     DelayTime = d.DelayTime
                 }).OrderBy(note => note.Position).ToList(),

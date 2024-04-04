@@ -22,6 +22,7 @@ namespace Infrastructure.Repository
 
         public async Task<IEnumerable<UnitViewModel>> GetAllUnitByLessonIdAsync(Guid lessonId)
         {
+
             var units = await _appDbContext.Units
                 .Include(unit => unit.PraticeUnits)
                 .Include(unit => unit.TheoryUnits)
