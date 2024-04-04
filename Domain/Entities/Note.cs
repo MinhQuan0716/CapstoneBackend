@@ -10,7 +10,7 @@ namespace Domain.Entities
     {
         public int NoteId { get; set; }
         public string NoteName { get; set; }
-        public string NoteType { get; set; }
+        public TimeSpan Duration { get; set; }
         public ICollection<ListNoteDetail> ListNoteDetail { get; set; }
     }
 }
