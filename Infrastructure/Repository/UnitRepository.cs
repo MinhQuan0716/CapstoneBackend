@@ -32,6 +32,7 @@ namespace Infrastructure.Repository
 
             var unitViewModels = units.Select(unit => new UnitViewModel
             {
+                Id = unit.Id,
                 UnitName = unit.UnitName,
                 UnitDuration = unit.UnitDuration,
                 UnitType = GetUnitType(unit)

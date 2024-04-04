@@ -8,6 +8,7 @@ namespace Application.ViewModel.LessonModel
 {
     public class UnitViewModel
     {
+        public Guid Id { get; set; }
         public string UnitName { get; set; }
         public TimeSpan UnitDuration { get; set; }
         public string UnitType { get; set; }
