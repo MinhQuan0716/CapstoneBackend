@@ -24,12 +24,14 @@ namespace Infrastructure
         private readonly ITheoryUnitRepository _theoryUnitRepository;
         private readonly IUserQuizAttemptRepository _userQuizAttemptRepository;
         private readonly IPracticeUnitRepository _practiceUnitRepository;
+        private readonly IVideoUnitRepository _videoUnitRepository;
         public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, 
             ISongRepository songRepository, ILessonRepository lessonRepository, 
             IQuizRepository quizRepository, IQuizDetailRepository quizDetailRepository, 
             IQuestionRepository questionRepository, IChoiceRepository choiceRepository,
             IQuestionDetailRepository questionDetailRepository, IUnitRepository unitRepository,
-            ITheoryUnitRepository theoryUnitRepository,IUserQuizAttemptRepository userQuizAttemptRepository, IPracticeUnitRepository practiceUnitRepository)
+            ITheoryUnitRepository theoryUnitRepository,IUserQuizAttemptRepository userQuizAttemptRepository,
+            IPracticeUnitRepository practiceUnitRepository, IVideoUnitRepository videoUnitRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
@@ -44,6 +46,7 @@ namespace Infrastructure
             _theoryUnitRepository = theoryUnitRepository;
             _userQuizAttemptRepository=userQuizAttemptRepository;
             _practiceUnitRepository = practiceUnitRepository;
+            _videoUnitRepository = videoUnitRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
@@ -67,6 +70,8 @@ namespace Infrastructure
 
         public IUserQuizAttemptRepository UserQuizAttemptRepository => _userQuizAttemptRepository;
         public IPracticeUnitRepository PracticeUnitRepository => _practiceUnitRepository;
+
+        public IVideoUnitRepository VideoUnitRepository => _videoUnitRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }

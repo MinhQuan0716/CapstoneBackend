@@ -6,7 +6,7 @@ using System.Net;
 
 namespace MonochordCapstoneProjectAPI.Controllers
 {
-    public class TheoryUnitController : Controller
+    public class TheoryUnitController : MainController
     {
         private readonly ITheoryUnitService _theoryUnitService;
         public TheoryUnitController(ITheoryUnitService theoryUnitService)
