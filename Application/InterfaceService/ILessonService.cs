@@ -17,5 +17,6 @@ namespace Application.InterfaceService
         Task<Respone> UpdateLesson(Guid lessonId, LessonDetailViewModel model);
         Task<Respone> GetLessonById(Guid lessonId);
         Task<Respone> GetAllLesson();
+        
     }
 }

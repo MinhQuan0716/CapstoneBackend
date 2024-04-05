@@ -19,7 +19,7 @@ namespace Application.ViewModel.PracticeUnitModel
     {
         public int NoteId { get; set; }
         public string NoteName { get; set; }
-        public TimeSpan Duration { get; set; }
+        public double Duration { get; set; }
         public int Position { get; set; }
         public double DelayTime { get; set; }
     }

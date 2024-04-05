@@ -30,7 +30,7 @@ namespace Infrastructure.Repository
 
             return practiceUnits.Select(p => new PracticeUnitModel
             {
-                LessonId = p.LessonId,
+                LessonId = p.UnitId,
                 ListNoteId = p.ListNoteId,
                 ListNoteName = p.ListNote.ListNoteName,
                 ListNoteStatus = p.ListNote.ListNoteStatus,

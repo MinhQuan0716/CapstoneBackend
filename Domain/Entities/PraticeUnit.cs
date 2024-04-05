@@ -8,8 +8,8 @@ namespace Domain.Entities
 {
     public class PraticeUnit:BaseEntity
     {
-        public Guid LessonId { get; set; }
-        public Unit Lesson { get; set; }
+        public Guid UnitId { get; set; }
+        public Unit Unit { get; set; }
         public Guid ListNoteId {  get; set; }   
         public ListNote ListNote { get; set; }
         public bool IsMandatory { get; set; }
