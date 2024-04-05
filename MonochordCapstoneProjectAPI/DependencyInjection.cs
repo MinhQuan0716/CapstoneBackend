@@ -22,6 +22,7 @@ namespace MonochordCapstoneProjectAPI
             services.AddScoped<ISendMailHelper,SendMailHelper>();
             services.AddScoped<ITheoryUnitService, TheoryUnitService>();
             services.AddScoped<IPracticeUnitService, PracticeUnitService>();
+            services.AddScoped<IVideoUnitService, VideoUnitService>();
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
