@@ -16,14 +16,8 @@ jobs:
         with:
           access_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Use Docker Compose (optional)
-        uses: hoverkraft-tech/compose-action@v1.5.1
-        with:
-          compose-file: "./docker-compose.yml"
-
-
       - name: SSH to droplet and deploy (using script or commands)
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DO_HOST }}  # Droplet hostname or IP
           username: ${{ secrets.DO_USERNAME }}  # Droplet username
