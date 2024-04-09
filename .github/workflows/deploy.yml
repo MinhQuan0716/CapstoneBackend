@@ -17,13 +17,10 @@ jobs:
           access_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Use Docker Compose (optional)
-        uses: appleboy/docker-compose@v1
+        uses: hoverkraft-tech/compose-action@v1.5.1
         with:
-          pull: true  # Pull latest images before build
-          build: true  # Build the image
+          compose-file: "./docker-compose.yml"
 
-      - name: Build Docker image (no push)
-        run: docker build -t your-image-name:latest .  # Replace with your image name
 
       - name: SSH to droplet and deploy (using script or commands)
         uses: appleboy/ssh-action@v1
