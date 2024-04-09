@@ -18,6 +18,6 @@ jobs:
           password: ${{ secrets.DO_PASSWORD }}  # Droplet password (consider SSH key for security)
           script: |  # Replace with your deployment script or commands
             docker-compose stop  # Stop existing container (if using Compose)
-            git clone https://${{ secrets.ACCESS_GITHUB_TOKEN }}/MinhQuan0716/CapstoneProject.git
+            git clone https://${{ secrets.DEPLOY_TOKEN }}/MinhQuan0716/CapstoneProject.git
             docker-compose up -build  # Start the container (if using Compose)
             # Or use individual docker commands for deployment
