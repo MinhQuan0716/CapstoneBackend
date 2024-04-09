@@ -1,32 +1,38 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: .NET
+name: CI/CD with .NET Docker on DigitalOcean
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]  # Change to your desired branch
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-latest  # Adjust OS as needed
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build docker 
-      run: docker-compose up --build 
-  deploy : 
-     needs: build 
-     runs-on: ubuntu-latest
-     steps:  
-      - name: Checkout file 
-        uses: actions/checkout@v4
-      - name: Install doctl  
-        uses: digitalocean/action-doctl@v2
+      - uses: actions/checkout@v4
+
+      - name: Login to DigitalOcean Container Registry
+        uses: digitalocean/action-do-oauth@v1
         with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Deploy to digtialocean
-        run: doctl compute droplet create example-droplet --size s-2vcpu-2gb --image ubuntu-22-04-x64 --region sgp1
+          access_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Use Docker Compose (optional)
+        uses: appleboy/docker-compose@v1
+        with:
+          pull: true  # Pull latest images before build
+          build: true  # Build the image
+
+      - name: Build Docker image (no push)
+        run: docker build -t your-image-name:latest .  # Replace with your image name
+
+      - name: SSH to droplet and deploy (using script or commands)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DO_HOST }}  # Droplet hostname or IP
+          username: ${{ secrets.DO_USERNAME }}  # Droplet username
+          password: ${{ secrets.DO_PASSWORD }}  # Droplet password (consider SSH key for security)
+          script: |  # Replace with your deployment script or commands
+            docker-compose stop  # Stop existing container (if using Compose)
+            git pull https://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/MinhQuan0716/CapstoneProject.git
+            docker-compose up -build  # Start the container (if using Compose)
+            # Or use individual docker commands for deployment
