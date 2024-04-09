@@ -10,12 +10,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Login to DigitalOcean Container Registry
-        uses: digitalocean/action-do-oauth@v1
-        with:
-          access_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
       - name: SSH to droplet and deploy (using script or commands)
         uses: appleboy/ssh-action@v1.0.3
         with:
