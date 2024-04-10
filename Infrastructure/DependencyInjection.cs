@@ -36,6 +36,7 @@ namespace Infrastructure
             services.AddScoped<ITheoryUnitRepository, TheoryUnitRepository>();
             services.AddScoped<IPracticeUnitRepository, PracticeUnitRepository>();
             services.AddScoped<IVideoUnitRepository, VideoUnitRepository>();
+            services.AddScoped<IUserProgressRepository, UserProgressRepository>();
             return services;
         }
     }
