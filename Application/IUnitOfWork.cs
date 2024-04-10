@@ -23,6 +23,7 @@ namespace Application
         public IUserQuizAttemptRepository UserQuizAttemptRepository { get; }
         public IPracticeUnitRepository PracticeUnitRepository { get; }
         public IVideoUnitRepository VideoUnitRepository { get; }
+        public IUserProgressRepository UserProgressRepository { get; }
         public Task<int> SaveChangeAsync();
     }
 }

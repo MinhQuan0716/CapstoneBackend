@@ -25,13 +25,14 @@ namespace Infrastructure
         private readonly IUserQuizAttemptRepository _userQuizAttemptRepository;
         private readonly IPracticeUnitRepository _practiceUnitRepository;
         private readonly IVideoUnitRepository _videoUnitRepository;
+        private readonly IUserProgressRepository _userProgressRepository;
         public UnitOfWork(AppDbContext appDBContext, IAccountRepository accountRepository, 
             ISongRepository songRepository, ILessonRepository lessonRepository, 
             IQuizRepository quizRepository, IQuizDetailRepository quizDetailRepository, 
             IQuestionRepository questionRepository, IChoiceRepository choiceRepository,
             IQuestionDetailRepository questionDetailRepository, IUnitRepository unitRepository,
             ITheoryUnitRepository theoryUnitRepository,IUserQuizAttemptRepository userQuizAttemptRepository,
-            IPracticeUnitRepository practiceUnitRepository, IVideoUnitRepository videoUnitRepository)
+            IPracticeUnitRepository practiceUnitRepository, IVideoUnitRepository videoUnitRepository,IUserProgressRepository userProgressRepository)
         {
             _appDBContext = appDBContext;
             _accountRepository = accountRepository;
@@ -47,6 +48,7 @@ namespace Infrastructure
             _userQuizAttemptRepository=userQuizAttemptRepository;
             _practiceUnitRepository = practiceUnitRepository;
             _videoUnitRepository = videoUnitRepository;
+            _userProgressRepository = userProgressRepository;
         }
 
         public IAccountRepository AccountRepository => _accountRepository;
@@ -72,6 +74,8 @@ namespace Infrastructure
         public IPracticeUnitRepository PracticeUnitRepository => _practiceUnitRepository;
 
         public IVideoUnitRepository VideoUnitRepository => _videoUnitRepository;
+
+        public IUserProgressRepository UserProgressRepository => _userProgressRepository;
 
         public async Task<int> SaveChangeAsync() => await _appDBContext.SaveChangesAsync();
     }
