@@ -22,7 +22,9 @@ pipeline {
         }
          stage('SSH server'){
            steps {
-             sshPublisher(publishers: [sshPublisherDesc(configName: 'remote-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: './helloworld.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'redis.conf')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            sshagent(['ssh-access']) {
+              sh  'sudo /root/helloworld.sh'
+          }
            }
             post {
                 // Pull success
