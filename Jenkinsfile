@@ -22,7 +22,7 @@ pipeline {
         }
          stage('SSH server'){
            steps {
-              sshPublisher(publishers: [sshPublisherDesc(configName: 'remote-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'cp redis.conf MonochordCapstoneProjectAPI', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'TestFile')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+              sshPublisher(publishers: [sshPublisherDesc(configName: 'remote-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'cp launchSettings.json MonochordCapstoneProjectAPI', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'TestFile')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
            }
             post {
                 // If Maven was able to run the tests, even if some of the test
