@@ -16,7 +16,10 @@ pipeline {
                 }
             }
         }
-       stage('SSH server'){
+      
+    
+    }
+         stage('SSH server'){
            steps {
                sshPublisher(publishers: [sshPublisherDesc(configName: 'remote-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd CapstoneProject
               docker-compose up -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'CapstoneProject')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
@@ -28,7 +31,5 @@ pipeline {
                    echo 'Push code to server success'
                 }
            }
-    
-    }
  }
 }
