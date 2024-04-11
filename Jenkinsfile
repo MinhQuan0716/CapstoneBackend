@@ -23,12 +23,11 @@ pipeline {
          stage('SSH server'){
            steps {
              sshagent(['ssh-access']) {
-              sh  ./helloworld.sh
+              sh  './helloworld.sh'
           }
            }
             post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
+                // Pull success
                 success {
                    echo 'Push code to server success'
                 }
