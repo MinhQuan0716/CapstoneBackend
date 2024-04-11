@@ -23,7 +23,7 @@ pipeline {
          stage('SSH server'){
            steps {
              sshagent(['ssh-access']) {
-                ./helloworld.sh
+              sh  ./helloworld.sh
           }
            }
             post {
