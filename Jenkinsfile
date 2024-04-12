@@ -28,7 +28,7 @@ pipeline {
            }
              stage('Build and Test') {
            steps {
-              withDotNet(id: '7.0') { // Reference the tool by ID
+              withDotNet(sdk: '7.0') { // Reference the tool by ID
                        dotnetRestore()
              }
              }
