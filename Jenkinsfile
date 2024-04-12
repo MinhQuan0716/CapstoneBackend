@@ -23,6 +23,16 @@ pipeline {
                 }
             }
         }
+        tools {
+         dotnetSDK "7.0" // Name: 5.0, URL: (download URL for .NET SDK 5.0)
+           }
+             stage('Build and Test') {
+           steps {
+              withDotNet(id: '7.0') { // Reference the tool by ID
+                       dotnetRestore()
+             }
+             }
+            }
          stage('SSH server'){
            steps {
             sshPublisher(publishers: [sshPublisherDesc(configName: 'remote-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: './gitconfig.sh', execTimeout: 1200000000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'redis.conf')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
