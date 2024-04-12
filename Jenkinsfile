@@ -4,7 +4,11 @@ pipeline {
      tools {
            dotnetsdk "7.0" // Name: 5.0, URL: (download URL for .NET SDK 5.0)
            }
-
+         stage('Check PATH') {
+        steps {
+         sh 'echo $PATH'
+         }
+         }
     stages {
         stage ('Clean workspace') {
          steps {
