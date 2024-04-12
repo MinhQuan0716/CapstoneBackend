@@ -36,7 +36,7 @@ pipeline {
           stage('Clean solution'){
               steps{
                   withDotNet(sdk:'7.0'){
-                      dotnetClean project: 'CapstoneBackend.sln
+                      dotnetClean project: 'CapstoneBackend.sln'
                   }
               }
           }
