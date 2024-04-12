@@ -29,7 +29,7 @@ pipeline {
              stage('Build and Test') {
            steps {
               withDotNet(sdk: '7.0') { // Reference the tool by ID
-               sh dotnetRestore() 
+               sh 'dotnet restore'
              }
              }
             }
