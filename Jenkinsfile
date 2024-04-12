@@ -29,7 +29,7 @@ pipeline {
             stage('Restore solution'){
                     steps {
                         withDotNet(sdk:'7.0'){
-                            dotnetRestore project: 'CapstoneBackend.sln',noRestore: false
+                            dotnetRestore project: 'CapstoneBackend.sln'
                         }
                     }
                 }
@@ -43,7 +43,7 @@ pipeline {
              stage('Build solution') {
            steps {
               withDotNet(sdk: '7.0') { // Reference the tool by ID
-               dotnetBuild project: 'CapstoneBackend.sln', sdk: '7.0', showSdkInfo: true, unstableIfErrors: true, unstableIfWarnings: true
+               dotnetBuild project: 'CapstoneBackend.sln', sdk: '7.0', showSdkInfo: true, unstableIfErrors: true, unstableIfWarnings: true,noRestore: false
              }
              }
             }
