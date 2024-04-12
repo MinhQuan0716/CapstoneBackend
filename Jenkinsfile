@@ -29,7 +29,7 @@ pipeline {
             stage('Restore'){
                     steps {
                         withDotNet(sdk:'7.0'){
-                            dotnetRestore()
+                            dotnetRestore project: 'CapstoneBackend.sln'
                         }
                     }
                 }
