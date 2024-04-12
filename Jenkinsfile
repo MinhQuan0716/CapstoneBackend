@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Restore packages') {
              steps {
-            withDotNet(sdk: 7.0)
+            withDotNet('sdk:7.0')
             {
               sh  "dotnetRestore ${workspace}\\CapstoneBackend.sln"
             }
