@@ -4,6 +4,11 @@ pipeline {
     
 
     stages {
+        stage ('Clean workspace') {
+         steps {
+          cleanWs()
+       }
+      }
         stage('Checkout') {
             steps {
                 // Get some code from a GitHub repository
@@ -14,10 +19,15 @@ pipeline {
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
                 success {
-                   echo 'Pull code succesuccess'
+                   echo 'Pull code success'
                 }
             }
         }
+        stage('Restore packages') {
+             steps {
+             bat "dotnet restore ${workspace}\\CapstoneBackend.sln"
+                       }
+           }
          stage('SSH server'){
            steps {
             sshPublisher(publishers: [sshPublisherDesc(configName: 'remote-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: './gitconfig.sh', execTimeout: 1200000000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'redis.conf')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
