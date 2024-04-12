@@ -2,7 +2,7 @@ pipeline {
     agent any
 
      tools {
-         dotnetSDK "7.0" // Name: 5.0, URL: (download URL for .NET SDK 5.0)
+         dotnetSDK "5.0" // Name: 5.0, URL: (download URL for .NET SDK 5.0)
            }
 
     stages {
@@ -28,7 +28,7 @@ pipeline {
        
              stage('Build and Test') {
            steps {
-              withDotNet(sdk: '7.0') { // Reference the tool by ID
+              withDotNet(sdk: '5.0') { // Reference the tool by ID
                        dotnetRestore()
              }
              }
