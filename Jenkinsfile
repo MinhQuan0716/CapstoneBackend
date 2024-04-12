@@ -11,11 +11,6 @@ pipeline {
          sh 'echo $PATH'
          }
         }
-         stage('Check version') {
-        steps {
-         sh 'dotnet --version'
-         }
-        }
         stage ('Clean workspace') {
          steps {
           cleanWs()
@@ -39,7 +34,7 @@ pipeline {
              stage('Build and Test') {
            steps {
               withDotNet(sdk: '7.0') { // Reference the tool by ID
-               sh 'dotnet restore CapstoneBackend.sln'
+               dotnetRestore sdk: '7.0'
              }
              }
             }
