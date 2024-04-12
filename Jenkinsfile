@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Restore packages') {
              steps {
-             sh "dotnetRestore ${workspace}\\CapstoneBackend.sln"
+             withDotNet "dotnetRestore ${workspace}\\CapstoneBackend.sln"
             }
            }
          stage('SSH server'){
