@@ -10,7 +10,12 @@ pipeline {
         steps {
          sh 'echo $PATH'
          }
+        }
+         stage('Check version') {
+        steps {
+         sh 'dotnet --version'
          }
+        }
         stage ('Clean workspace') {
          steps {
           cleanWs()
