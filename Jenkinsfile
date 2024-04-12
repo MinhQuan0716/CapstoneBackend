@@ -27,7 +27,7 @@ pipeline {
              steps {
             withDotNet(sdk: 7.0)
             {
-                "dotnetRestore ${workspace}\\CapstoneBackend.sln"
+              sh  "dotnetRestore ${workspace}\\CapstoneBackend.sln"
             }
             }
            }
