@@ -1,7 +1,9 @@
 pipeline {
     agent any
 
-    
+     tools {
+         dotnetSDK "7.0" // Name: 5.0, URL: (download URL for .NET SDK 5.0)
+           }
 
     stages {
         stage ('Clean workspace') {
@@ -23,9 +25,7 @@ pipeline {
                 }
             }
         }
-        tools {
-         dotnetSDK "7.0" // Name: 5.0, URL: (download URL for .NET SDK 5.0)
-           }
+       
              stage('Build and Test') {
            steps {
               withDotNet(sdk: '7.0') { // Reference the tool by ID
