@@ -6,11 +6,7 @@ pipeline {
            }
         
     stages {
-         stage('Check PATH') {
-        steps {
-         sh 'echo $PATH'
-         }
-        }
+        
         stage ('Clean workspace') {
          steps {
           cleanWs()
@@ -30,7 +26,13 @@ pipeline {
                 }
             }
         }
-       
+            stage('Restore'){
+                    steps {
+                        withDotNet(sdk:'7.0'){
+                            dotnetRestore()
+                        }
+                    }
+                }
              stage('Build') {
            steps {
               withDotNet(sdk: '7.0') { // Reference the tool by ID
