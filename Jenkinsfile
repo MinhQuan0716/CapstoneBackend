@@ -31,10 +31,10 @@ pipeline {
             }
         }
        
-             stage('Restore') {
+             stage('Build') {
            steps {
               withDotNet(sdk: '7.0') { // Reference the tool by ID
-               dotnetRestore()
+               dotnetBuild project: 'CapstoneBackend.sln', sdk: '7.0', showSdkInfo: true, unstableIfErrors: true, unstableIfWarnings: true
              }
              }
             }
